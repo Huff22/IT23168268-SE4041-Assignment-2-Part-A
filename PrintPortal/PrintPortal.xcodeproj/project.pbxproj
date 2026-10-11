@@ -7,62 +7,62 @@
 	objects = {
 
 /* Begin PBXContainerItemProxy section */
-		E0653AB6307BAC9500F5DCDD /* PBXContainerItemProxy */ = {
+		E0653B10307BBE4C00F5DCDD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = E0653A9E307BAC9400F5DCDD /* Project object */;
+			containerPortal = E0653AF8307BBE4B00F5DCDD /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = E0653AA5307BAC9400F5DCDD;
-			remoteInfo = Spacia;
+			remoteGlobalIDString = E0653AFF307BBE4B00F5DCDD;
+			remoteInfo = PrintPortal;
 		};
-		E0653AC0307BAC9500F5DCDD /* PBXContainerItemProxy */ = {
+		E0653B1A307BBE4C00F5DCDD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = E0653A9E307BAC9400F5DCDD /* Project object */;
+			containerPortal = E0653AF8307BBE4B00F5DCDD /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = E0653AA5307BAC9400F5DCDD;
-			remoteInfo = Spacia;
+			remoteGlobalIDString = E0653AFF307BBE4B00F5DCDD;
+			remoteInfo = PrintPortal;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		E0653AA6307BAC9400F5DCDD /* Spacia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Spacia.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		E0653AB5307BAC9500F5DCDD /* SpaciaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpaciaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		E0653ABF307BAC9500F5DCDD /* SpaciaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpaciaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E0653B00307BBE4B00F5DCDD /* PrintPortal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PrintPortal.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E0653B0F307BBE4C00F5DCDD /* PrintPortalTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PrintPortalTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E0653B19307BBE4C00F5DCDD /* PrintPortalUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PrintPortalUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		E0653AA8307BAC9400F5DCDD /* Spacia */ = {
+		E0653B02307BBE4B00F5DCDD /* PrintPortal */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Spacia;
+			path = PrintPortal;
 			sourceTree = "<group>";
 		};
-		E0653AB8307BAC9500F5DCDD /* SpaciaTests */ = {
+		E0653B12307BBE4C00F5DCDD /* PrintPortalTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = SpaciaTests;
+			path = PrintPortalTests;
 			sourceTree = "<group>";
 		};
-		E0653AC2307BAC9500F5DCDD /* SpaciaUITests */ = {
+		E0653B1C307BBE4C00F5DCDD /* PrintPortalUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = SpaciaUITests;
+			path = PrintPortalUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		E0653AA3307BAC9400F5DCDD /* Frameworks */ = {
+		E0653AFD307BBE4B00F5DCDD /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E0653AB2307BAC9500F5DCDD /* Frameworks */ = {
+		E0653B0C307BBE4C00F5DCDD /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E0653ABC307BAC9500F5DCDD /* Frameworks */ = {
+		E0653B16307BBE4C00F5DCDD /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -72,22 +72,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		E0653A9D307BAC9400F5DCDD = {
+		E0653AF7307BBE4B00F5DCDD = {
 			isa = PBXGroup;
 			children = (
-				E0653AA8307BAC9400F5DCDD /* Spacia */,
-				E0653AB8307BAC9500F5DCDD /* SpaciaTests */,
-				E0653AC2307BAC9500F5DCDD /* SpaciaUITests */,
-				E0653AA7307BAC9400F5DCDD /* Products */,
+				E0653B02307BBE4B00F5DCDD /* PrintPortal */,
+				E0653B12307BBE4C00F5DCDD /* PrintPortalTests */,
+				E0653B1C307BBE4C00F5DCDD /* PrintPortalUITests */,
+				E0653B01307BBE4B00F5DCDD /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		E0653AA7307BAC9400F5DCDD /* Products */ = {
+		E0653B01307BBE4B00F5DCDD /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E0653AA6307BAC9400F5DCDD /* Spacia.app */,
-				E0653AB5307BAC9500F5DCDD /* SpaciaTests.xctest */,
-				E0653ABF307BAC9500F5DCDD /* SpaciaUITests.xctest */,
+				E0653B00307BBE4B00F5DCDD /* PrintPortal.app */,
+				E0653B0F307BBE4C00F5DCDD /* PrintPortalTests.xctest */,
+				E0653B19307BBE4C00F5DCDD /* PrintPortalUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -95,134 +95,134 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		E0653AA5307BAC9400F5DCDD /* Spacia */ = {
+		E0653AFF307BBE4B00F5DCDD /* PrintPortal */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E0653AC9307BAC9500F5DCDD /* Build configuration list for PBXNativeTarget "Spacia" */;
+			buildConfigurationList = E0653B23307BBE4C00F5DCDD /* Build configuration list for PBXNativeTarget "PrintPortal" */;
 			buildPhases = (
-				E0653AA2307BAC9400F5DCDD /* Sources */,
-				E0653AA3307BAC9400F5DCDD /* Frameworks */,
-				E0653AA4307BAC9400F5DCDD /* Resources */,
+				E0653AFC307BBE4B00F5DCDD /* Sources */,
+				E0653AFD307BBE4B00F5DCDD /* Frameworks */,
+				E0653AFE307BBE4B00F5DCDD /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				E0653AA8307BAC9400F5DCDD /* Spacia */,
+				E0653B02307BBE4B00F5DCDD /* PrintPortal */,
 			);
-			name = Spacia;
+			name = PrintPortal;
 			packageProductDependencies = (
 			);
-			productName = Spacia;
-			productReference = E0653AA6307BAC9400F5DCDD /* Spacia.app */;
+			productName = PrintPortal;
+			productReference = E0653B00307BBE4B00F5DCDD /* PrintPortal.app */;
 			productType = "com.apple.product-type.application";
 		};
-		E0653AB4307BAC9500F5DCDD /* SpaciaTests */ = {
+		E0653B0E307BBE4C00F5DCDD /* PrintPortalTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E0653ACC307BAC9500F5DCDD /* Build configuration list for PBXNativeTarget "SpaciaTests" */;
+			buildConfigurationList = E0653B26307BBE4C00F5DCDD /* Build configuration list for PBXNativeTarget "PrintPortalTests" */;
 			buildPhases = (
-				E0653AB1307BAC9500F5DCDD /* Sources */,
-				E0653AB2307BAC9500F5DCDD /* Frameworks */,
-				E0653AB3307BAC9500F5DCDD /* Resources */,
+				E0653B0B307BBE4C00F5DCDD /* Sources */,
+				E0653B0C307BBE4C00F5DCDD /* Frameworks */,
+				E0653B0D307BBE4C00F5DCDD /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				E0653AB7307BAC9500F5DCDD /* PBXTargetDependency */,
+				E0653B11307BBE4C00F5DCDD /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				E0653AB8307BAC9500F5DCDD /* SpaciaTests */,
+				E0653B12307BBE4C00F5DCDD /* PrintPortalTests */,
 			);
-			name = SpaciaTests;
+			name = PrintPortalTests;
 			packageProductDependencies = (
 			);
-			productName = SpaciaTests;
-			productReference = E0653AB5307BAC9500F5DCDD /* SpaciaTests.xctest */;
+			productName = PrintPortalTests;
+			productReference = E0653B0F307BBE4C00F5DCDD /* PrintPortalTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		E0653ABE307BAC9500F5DCDD /* SpaciaUITests */ = {
+		E0653B18307BBE4C00F5DCDD /* PrintPortalUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E0653ACF307BAC9500F5DCDD /* Build configuration list for PBXNativeTarget "SpaciaUITests" */;
+			buildConfigurationList = E0653B29307BBE4C00F5DCDD /* Build configuration list for PBXNativeTarget "PrintPortalUITests" */;
 			buildPhases = (
-				E0653ABB307BAC9500F5DCDD /* Sources */,
-				E0653ABC307BAC9500F5DCDD /* Frameworks */,
-				E0653ABD307BAC9500F5DCDD /* Resources */,
+				E0653B15307BBE4C00F5DCDD /* Sources */,
+				E0653B16307BBE4C00F5DCDD /* Frameworks */,
+				E0653B17307BBE4C00F5DCDD /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				E0653AC1307BAC9500F5DCDD /* PBXTargetDependency */,
+				E0653B1B307BBE4C00F5DCDD /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				E0653AC2307BAC9500F5DCDD /* SpaciaUITests */,
+				E0653B1C307BBE4C00F5DCDD /* PrintPortalUITests */,
 			);
-			name = SpaciaUITests;
+			name = PrintPortalUITests;
 			packageProductDependencies = (
 			);
-			productName = SpaciaUITests;
-			productReference = E0653ABF307BAC9500F5DCDD /* SpaciaUITests.xctest */;
+			productName = PrintPortalUITests;
+			productReference = E0653B19307BBE4C00F5DCDD /* PrintPortalUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		E0653A9E307BAC9400F5DCDD /* Project object */ = {
+		E0653AF8307BBE4B00F5DCDD /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 2660;
 				LastUpgradeCheck = 2660;
 				TargetAttributes = {
-					E0653AA5307BAC9400F5DCDD = {
+					E0653AFF307BBE4B00F5DCDD = {
 						CreatedOnToolsVersion = 26.6;
 					};
-					E0653AB4307BAC9500F5DCDD = {
+					E0653B0E307BBE4C00F5DCDD = {
 						CreatedOnToolsVersion = 26.6;
-						TestTargetID = E0653AA5307BAC9400F5DCDD;
+						TestTargetID = E0653AFF307BBE4B00F5DCDD;
 					};
-					E0653ABE307BAC9500F5DCDD = {
+					E0653B18307BBE4C00F5DCDD = {
 						CreatedOnToolsVersion = 26.6;
-						TestTargetID = E0653AA5307BAC9400F5DCDD;
+						TestTargetID = E0653AFF307BBE4B00F5DCDD;
 					};
 				};
 			};
-			buildConfigurationList = E0653AA1307BAC9400F5DCDD /* Build configuration list for PBXProject "Spacia" */;
+			buildConfigurationList = E0653AFB307BBE4B00F5DCDD /* Build configuration list for PBXProject "PrintPortal" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
 			);
-			mainGroup = E0653A9D307BAC9400F5DCDD;
+			mainGroup = E0653AF7307BBE4B00F5DCDD;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = E0653AA7307BAC9400F5DCDD /* Products */;
+			productRefGroup = E0653B01307BBE4B00F5DCDD /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				E0653AA5307BAC9400F5DCDD /* Spacia */,
-				E0653AB4307BAC9500F5DCDD /* SpaciaTests */,
-				E0653ABE307BAC9500F5DCDD /* SpaciaUITests */,
+				E0653AFF307BBE4B00F5DCDD /* PrintPortal */,
+				E0653B0E307BBE4C00F5DCDD /* PrintPortalTests */,
+				E0653B18307BBE4C00F5DCDD /* PrintPortalUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		E0653AA4307BAC9400F5DCDD /* Resources */ = {
+		E0653AFE307BBE4B00F5DCDD /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E0653AB3307BAC9500F5DCDD /* Resources */ = {
+		E0653B0D307BBE4C00F5DCDD /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E0653ABD307BAC9500F5DCDD /* Resources */ = {
+		E0653B17307BBE4C00F5DCDD /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -232,21 +232,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		E0653AA2307BAC9400F5DCDD /* Sources */ = {
+		E0653AFC307BBE4B00F5DCDD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E0653AB1307BAC9500F5DCDD /* Sources */ = {
+		E0653B0B307BBE4C00F5DCDD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E0653ABB307BAC9500F5DCDD /* Sources */ = {
+		E0653B15307BBE4C00F5DCDD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -256,20 +256,20 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		E0653AB7307BAC9500F5DCDD /* PBXTargetDependency */ = {
+		E0653B11307BBE4C00F5DCDD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = E0653AA5307BAC9400F5DCDD /* Spacia */;
-			targetProxy = E0653AB6307BAC9500F5DCDD /* PBXContainerItemProxy */;
+			target = E0653AFF307BBE4B00F5DCDD /* PrintPortal */;
+			targetProxy = E0653B10307BBE4C00F5DCDD /* PBXContainerItemProxy */;
 		};
-		E0653AC1307BAC9500F5DCDD /* PBXTargetDependency */ = {
+		E0653B1B307BBE4C00F5DCDD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = E0653AA5307BAC9400F5DCDD /* Spacia */;
-			targetProxy = E0653AC0307BAC9500F5DCDD /* PBXContainerItemProxy */;
+			target = E0653AFF307BBE4B00F5DCDD /* PrintPortal */;
+			targetProxy = E0653B1A307BBE4C00F5DCDD /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		E0653AC7307BAC9500F5DCDD /* Debug */ = {
+		E0653B21307BBE4C00F5DCDD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -333,7 +333,7 @@
 			};
 			name = Debug;
 		};
-		E0653AC8307BAC9500F5DCDD /* Release */ = {
+		E0653B22307BBE4C00F5DCDD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -390,7 +390,7 @@
 			};
 			name = Release;
 		};
-		E0653ACA307BAC9500F5DCDD /* Debug */ = {
+		E0653B24307BBE4C00F5DCDD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -410,7 +410,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = lk.ac.sliit.Spacia;
+				PRODUCT_BUNDLE_IDENTIFIER = lk.ac.sliit.PrintPortal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -422,7 +422,7 @@
 			};
 			name = Debug;
 		};
-		E0653ACB307BAC9500F5DCDD /* Release */ = {
+		E0653B25307BBE4C00F5DCDD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -442,7 +442,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = lk.ac.sliit.Spacia;
+				PRODUCT_BUNDLE_IDENTIFIER = lk.ac.sliit.PrintPortal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -454,7 +454,7 @@
 			};
 			name = Release;
 		};
-		E0653ACD307BAC9500F5DCDD /* Debug */ = {
+		E0653B27307BBE4C00F5DCDD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -464,7 +464,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 26.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = lk.ac.sliit.SpaciaTests;
+				PRODUCT_BUNDLE_IDENTIFIER = lk.ac.sliit.PrintPortalTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -472,11 +472,11 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Spacia.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Spacia";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PrintPortal.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/PrintPortal";
 			};
 			name = Debug;
 		};
-		E0653ACE307BAC9500F5DCDD /* Release */ = {
+		E0653B28307BBE4C00F5DCDD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -486,7 +486,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 26.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = lk.ac.sliit.SpaciaTests;
+				PRODUCT_BUNDLE_IDENTIFIER = lk.ac.sliit.PrintPortalTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -494,11 +494,11 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Spacia.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Spacia";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PrintPortal.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/PrintPortal";
 			};
 			name = Release;
 		};
-		E0653AD0307BAC9500F5DCDD /* Debug */ = {
+		E0653B2A307BBE4C00F5DCDD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -506,7 +506,7 @@
 				DEVELOPMENT_TEAM = SUVU2C8DJL;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = lk.ac.sliit.SpaciaUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = lk.ac.sliit.PrintPortalUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -514,11 +514,11 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = Spacia;
+				TEST_TARGET_NAME = PrintPortal;
 			};
 			name = Debug;
 		};
-		E0653AD1307BAC9500F5DCDD /* Release */ = {
+		E0653B2B307BBE4C00F5DCDD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -526,7 +526,7 @@
 				DEVELOPMENT_TEAM = SUVU2C8DJL;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = lk.ac.sliit.SpaciaUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = lk.ac.sliit.PrintPortalUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -534,50 +534,50 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = Spacia;
+				TEST_TARGET_NAME = PrintPortal;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		E0653AA1307BAC9400F5DCDD /* Build configuration list for PBXProject "Spacia" */ = {
+		E0653AFB307BBE4B00F5DCDD /* Build configuration list for PBXProject "PrintPortal" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E0653AC7307BAC9500F5DCDD /* Debug */,
-				E0653AC8307BAC9500F5DCDD /* Release */,
+				E0653B21307BBE4C00F5DCDD /* Debug */,
+				E0653B22307BBE4C00F5DCDD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E0653AC9307BAC9500F5DCDD /* Build configuration list for PBXNativeTarget "Spacia" */ = {
+		E0653B23307BBE4C00F5DCDD /* Build configuration list for PBXNativeTarget "PrintPortal" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E0653ACA307BAC9500F5DCDD /* Debug */,
-				E0653ACB307BAC9500F5DCDD /* Release */,
+				E0653B24307BBE4C00F5DCDD /* Debug */,
+				E0653B25307BBE4C00F5DCDD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E0653ACC307BAC9500F5DCDD /* Build configuration list for PBXNativeTarget "SpaciaTests" */ = {
+		E0653B26307BBE4C00F5DCDD /* Build configuration list for PBXNativeTarget "PrintPortalTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E0653ACD307BAC9500F5DCDD /* Debug */,
-				E0653ACE307BAC9500F5DCDD /* Release */,
+				E0653B27307BBE4C00F5DCDD /* Debug */,
+				E0653B28307BBE4C00F5DCDD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E0653ACF307BAC9500F5DCDD /* Build configuration list for PBXNativeTarget "SpaciaUITests" */ = {
+		E0653B29307BBE4C00F5DCDD /* Build configuration list for PBXNativeTarget "PrintPortalUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E0653AD0307BAC9500F5DCDD /* Debug */,
-				E0653AD1307BAC9500F5DCDD /* Release */,
+				E0653B2A307BBE4C00F5DCDD /* Debug */,
+				E0653B2B307BBE4C00F5DCDD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = E0653A9E307BAC9400F5DCDD /* Project object */;
+	rootObject = E0653AF8307BBE4B00F5DCDD /* Project object */;
 }

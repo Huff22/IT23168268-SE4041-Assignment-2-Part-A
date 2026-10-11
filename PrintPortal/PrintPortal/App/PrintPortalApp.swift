@@ -1,6 +1,6 @@
 //
-//  SpaciaApp.swift
-//  Spacia
+//  PrintPortalApp.swift
+//  PrintPortal
 //
 //  Created by Hafsa Faleel on 2026-10-11.
 //
@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftData
 
 @main
-struct SpaciaApp: App {
+struct PrintPortalApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Item.self,

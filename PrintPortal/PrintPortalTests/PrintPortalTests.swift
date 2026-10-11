@@ -1,14 +1,14 @@
 //
-//  SpaciaTests.swift
-//  SpaciaTests
+//  PrintPortalTests.swift
+//  PrintPortalTests
 //
 //  Created by Hafsa Faleel on 2026-10-11.
 //
 
 import Testing
-@testable import Spacia
+@testable import PrintPortal
 
-struct SpaciaTests {
+struct PrintPortalTests {
 
     @Test func example() async throws {
         // Write your test here and use APIs like `#expect(...)` to check expected conditions.

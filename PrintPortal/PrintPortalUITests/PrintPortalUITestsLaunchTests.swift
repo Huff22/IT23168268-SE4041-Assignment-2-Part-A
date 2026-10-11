@@ -1,13 +1,13 @@
 //
-//  SpaciaUITestsLaunchTests.swift
-//  SpaciaUITests
+//  PrintPortalUITestsLaunchTests.swift
+//  PrintPortalUITests
 //
 //  Created by Hafsa Faleel on 2026-10-11.
 //
 
 import XCTest
 
-final class SpaciaUITestsLaunchTests: XCTestCase {
+final class PrintPortalUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true

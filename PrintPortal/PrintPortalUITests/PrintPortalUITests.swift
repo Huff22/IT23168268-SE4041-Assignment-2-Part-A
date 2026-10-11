@@ -1,13 +1,13 @@
 //
-//  SpaciaUITests.swift
-//  SpaciaUITests
+//  PrintPortalUITests.swift
+//  PrintPortalUITests
 //
 //  Created by Hafsa Faleel on 2026-10-11.
 //
 
 import XCTest
 
-final class SpaciaUITests: XCTestCase {
+final class PrintPortalUITests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
