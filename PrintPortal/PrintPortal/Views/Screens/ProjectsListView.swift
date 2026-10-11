@@ -27,14 +27,35 @@ struct ProjectsListView: View {
                         .padding(.horizontal, 32)
                 }
             } else {
+                // Replace the existing List block in ProjectsListView.swift with this:
                 List(projects) { project in
-                    VStack(alignment: .leading) {
-                        Text(project.title)
-                            .font(.headline)
-                        Text(project.productType.rawValue)
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
+                    HStack(spacing: 16) {
+                        if let filename = project.artworkFilename,
+                           let uiImage = ArtworkStorageService.shared.loadImage(filename: filename) {
+                            Image(uiImage: uiImage)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 60, height: 60)
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                        } else {
+                            RoundedRectangle(cornerRadius: 8)
+                                .fill(Color.gray.opacity(0.3))
+                                .frame(width: 60, height: 60)
+                                .overlay(Image(systemName: "photo").foregroundColor(.gray))
+                        }
+                        
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(project.title)
+                                .font(.headline)
+                            Text(project.productType.rawValue)
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                            Text("\(String(format: "%.2f", project.widthMeters))m × \(String(format: "%.2f", project.heightMeters))m")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                        }
                     }
+                    .padding(.vertical, 4)
                 }
             }
         }

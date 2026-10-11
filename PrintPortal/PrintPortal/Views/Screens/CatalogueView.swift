@@ -14,23 +14,27 @@ struct CatalogueView: View {
         ScrollView {
             VStack(spacing: 16) {
                 ForEach(products) { product in
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text(product.rawValue)
-                            .font(.headline)
-                            .foregroundColor(.printPortalAccent)
-                        Text(product.description)
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                        HStack {
-                            Text("Default: \(String(format: "%.0f", product.defaultWidthMeters * 100)) × \(String(format: "%.0f", product.defaultHeightMeters * 100)) cm")
-                                .font(.caption)
-                                .foregroundColor(.secondary)
-                            Spacer()
-                            Image(systemName: "chevron.right")
+                    NavigationLink(destination: DesignStudioView(product: product)) {
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text(product.rawValue)
+                                .font(.headline)
                                 .foregroundColor(.printPortalAccent)
+                            Text(product.description)
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                                .multilineTextAlignment(.leading) // Keep text aligned left inside the button
+                            HStack {
+                                Text("Default: \(String(format: "%.0f", product.defaultWidthMeters * 100)) × \(String(format: "%.0f", product.defaultHeightMeters * 100)) cm")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                                Spacer()
+                                Image(systemName: "chevron.right")
+                                    .foregroundColor(.printPortalAccent)
+                            }
                         }
+                        .printPortalCard()
                     }
-                    .printPortalCard()
+                    .buttonStyle(PlainButtonStyle()) // Prevents the whole card from turning blue
                 }
             }
             .padding()
