@@ -61,45 +61,81 @@ struct ARViewContainer: UIViewRepresentable {
         }
         
         func placeSign(at result: ARRaycastResult) {
-            guard let arView = arView else { return }
-            
-            // Create the Anchor at the tapped location
-            let anchorEntity = AnchorEntity(world: result.worldTransform)
-            
-            // Generate the 3D Mesh based on user's saved dimensions
-            let width = parent.project.widthMeters
-            let height = parent.project.heightMeters
-            let depth: Float = 0.05 // Give the sign a realistic 5cm thickness
-            
-            let mesh = MeshResource.generateBox(width: width, height: height, depth: depth)
-            
-            // Create the Material and apply the saved artwork texture
-                        var material = SimpleMaterial(color: .white, isMetallic: false)
-                        
-                        // Normalize the image to prevent Metal storage mode crashes
-                        let safeImage = parent.artworkImage.normalizedForRealityKit() ?? parent.artworkImage
-                        
-                        if let cgImage = safeImage.cgImage {
-                            do {
-                                let texture = try TextureResource.generate(from: cgImage, options: .init(semantic: .color))
-                                material.color = .init(tint: .white, texture: .init(texture))
-                            } catch {
-                                print("Failed to generate texture: \(error)")
-                            }
+                    guard let arView = arView else { return }
+                    
+                    let anchorEntity = AnchorEntity(world: result.worldTransform)
+                    
+                    var material = SimpleMaterial(color: .white, isMetallic: false)
+                    let safeImage = parent.artworkImage.normalizedForRealityKit() ?? parent.artworkImage
+                    
+                    if let cgImage = safeImage.cgImage {
+                        do {
+                            let texture = try TextureResource.generate(from: cgImage, options: .init(semantic: .color))
+                            material.color = .init(tint: .white, texture: .init(texture))
+                        } catch {
+                            print("Failed to generate texture: \(error)")
                         }
-            
-            let modelEntity = ModelEntity(mesh: mesh, materials: [material])
-            
-            // Shift the model up by half its height so it sits ON the floor, not halfway through it
-            modelEntity.position.y = height / 2
-            
-            // Add interaction: allow user to drag, scale, and rotate the sign
-            modelEntity.generateCollisionShapes(recursive: true)
-            arView.installGestures([.translation, .rotation], for: modelEntity)
-            
-            anchorEntity.addChild(modelEntity)
-            arView.scene.addAnchor(anchorEntity)
-        }
+                    }
+                    
+                    // Use our new multi-part generator
+                    let productEntity = createProductEntity(for: parent.project, with: material)
+                    
+                    // Enable dragging and rotating on the composited object
+                    arView.installGestures([.translation, .rotation], for: productEntity)
+                    
+                    anchorEntity.addChild(productEntity)
+                    arView.scene.addAnchor(anchorEntity)
+                }
+        
+        private func createProductEntity(for project: DesignProject, with material: SimpleMaterial) -> ModelEntity {
+                    let productEntity = ModelEntity() // Parent container
+                    let w = project.widthMeters
+                    let h = project.heightMeters
+                    
+                    switch project.productType {
+                    case .aFrame:
+                        // Create an A-Frame out of two angled panels
+                        let thickness: Float = 0.02
+                        let panelMesh = MeshResource.generateBox(width: w, height: h, depth: thickness)
+                        
+                        // Front Panel (Tilted back)
+                        let frontPanel = ModelEntity(mesh: panelMesh, materials: [material])
+                        frontPanel.position = [0, h / 2, 0.15] // Shifted forward
+                        frontPanel.transform.rotation = simd_quatf(angle: .pi / 12, axis: [1, 0, 0]) // 15-degree tilt
+                        productEntity.addChild(frontPanel)
+                        
+                        // Back Panel (Tilted forward)
+                        let backPanel = ModelEntity(mesh: panelMesh, materials: [material])
+                        backPanel.position = [0, h / 2, -0.15] // Shifted backward
+                        backPanel.transform.rotation = simd_quatf(angle: -.pi / 12, axis: [1, 0, 0])
+                        productEntity.addChild(backPanel)
+                        
+                    case .rollupBanner:
+                        // Base Cassette (The silver metal box on the floor)
+                        let baseMesh = MeshResource.generateBox(width: w + 0.05, height: 0.1, depth: 0.2)
+                        let baseMat = SimpleMaterial(color: .lightGray, isMetallic: true)
+                        let baseEntity = ModelEntity(mesh: baseMesh, materials: [baseMat])
+                        baseEntity.position = [0, 0.05, 0] // Sitting exactly on floor
+                        productEntity.addChild(baseEntity)
+                        
+                        // Canvas (The tall printed banner)
+                        let canvasMesh = MeshResource.generateBox(width: w, height: h, depth: 0.01)
+                        let canvasEntity = ModelEntity(mesh: canvasMesh, materials: [material])
+                        canvasEntity.position = [0, (h / 2) + 0.1, 0] // Shifted up above the base
+                        productEntity.addChild(canvasEntity)
+                        
+                    case .rigidBoard:
+                        // A simple, thick flat board
+                        let boardMesh = MeshResource.generateBox(width: w, height: h, depth: 0.05)
+                        let boardEntity = ModelEntity(mesh: boardMesh, materials: [material])
+                        boardEntity.position = [0, h / 2, 0]
+                        productEntity.addChild(boardEntity)
+                    }
+                    
+                    // Calculate a unified collision box around all sub-parts so the whole object is draggable
+                    productEntity.generateCollisionShapes(recursive: true)
+                    return productEntity
+                }
     }
 }
 
