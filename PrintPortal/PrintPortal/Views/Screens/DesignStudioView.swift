@@ -25,6 +25,8 @@ struct DesignStudioView: View {
     @State private var selectedItem: PhotosPickerItem?
     @State private var selectedImage: UIImage?
     @State private var resolutionWarning: Bool = false
+    @State private var newlySavedProject: DesignProject? = nil
+    @State private var navigateToAR: Bool = false
     
     init(product: ProductType) {
         self.product = product
@@ -92,6 +94,11 @@ struct DesignStudioView: View {
         }
         .navigationTitle("New \(product.rawValue)")
         .navigationBarTitleDisplayMode(.inline)
+        .navigationDestination(isPresented: $navigateToAR) {
+                    if let project = newlySavedProject {
+                        ARPreviewView(project: project)
+                    }
+                }
     }
     
     // MARK: - Logic
@@ -118,32 +125,31 @@ struct DesignStudioView: View {
     }
     
     private func saveProject() {
-        guard let image = selectedImage else { return }
-        
-        let newProjectId = UUID()
-        var savedFilename: String? = nil
-        
-        // Save image to disk using our service
-        do {
-            savedFilename = try ArtworkStorageService.shared.saveImage(image, id: newProjectId)
-        } catch {
-            print("Failed to save image to disk: \(error)")
+            guard let image = selectedImage else { return }
+            
+            let newProjectId = UUID()
+            var savedFilename: String? = nil
+            
+            do {
+                savedFilename = try ArtworkStorageService.shared.saveImage(image, id: newProjectId)
+            } catch {
+                print("Failed to save image to disk: \(error)")
+            }
+            
+            let newProject = DesignProject(
+                title: title,
+                productType: product,
+                widthMeters: widthMeters,
+                heightMeters: heightMeters,
+                artworkFilename: savedFilename
+            )
+            newProject.id = newProjectId
+            
+            // Save to SwiftData
+            modelContext.insert(newProject)
+            
+            // Trigger the automatic navigation to the AR Screen
+            self.newlySavedProject = newProject
+            self.navigateToAR = true
         }
-        
-        // Create SwiftData model
-        let newProject = DesignProject(
-            title: title,
-            productType: product,
-            widthMeters: widthMeters,
-            heightMeters: heightMeters,
-            artworkFilename: savedFilename
-        )
-        // Explicitly assign the ID we used for the image
-        newProject.id = newProjectId
-        
-        // Save to SwiftData
-        modelContext.insert(newProject)
-        
-        dismiss()
-    }
 }

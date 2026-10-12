@@ -14,22 +14,22 @@ struct ARViewContainer: UIViewRepresentable {
     let artworkImage: UIImage
     
     func makeUIView(context: Context) -> ARView {
-        let arView = ARView(frame: .zero)
-        
-        // 1. Configure AR Session for horizontal floor detection
-        let config = ARWorldTrackingConfiguration()
-        config.planeDetection = [.horizontal]
-        // Add environment texturing for realistic lighting
-        config.environmentTexturing = .automatic
-        arView.session.run(config)
-        
-        // 2. Add Tap Gesture to place the 3D model
-        let tapGesture = UITapGestureRecognizer(target: context.coordinator, action: #selector(Coordinator.handleTap))
-        arView.addGestureRecognizer(tapGesture)
-        context.coordinator.arView = arView
-        
-        return arView
-    }
+            // Explicitly set AR camera mode
+            let arView = ARView(frame: .zero, cameraMode: .ar, automaticallyConfigureSession: false)
+            
+            let config = ARWorldTrackingConfiguration()
+            config.planeDetection = [.horizontal]
+            config.environmentTexturing = .automatic
+            
+            // Run with options to force restart tracking if it was paused by the permission prompt
+            arView.session.run(config, options: [.resetTracking, .removeExistingAnchors])
+            
+            let tapGesture = UITapGestureRecognizer(target: context.coordinator, action: #selector(Coordinator.handleTap))
+            arView.addGestureRecognizer(tapGesture)
+            context.coordinator.arView = arView
+            
+            return arView
+        }
     
     func updateUIView(_ uiView: ARView, context: Context) {}
     
@@ -74,16 +74,19 @@ struct ARViewContainer: UIViewRepresentable {
             let mesh = MeshResource.generateBox(width: width, height: height, depth: depth)
             
             // Create the Material and apply the saved artwork texture
-            var material = SimpleMaterial(color: .white, isMetallic: false)
-            
-            if let cgImage = parent.artworkImage.cgImage {
-                do {
-                    let texture = try TextureResource.generate(from: cgImage, options: .init(semantic: .color))
-                    material.color = .init(tint: .white, texture: .init(texture))
-                } catch {
-                    print("Failed to generate texture: \(error)")
-                }
-            }
+                        var material = SimpleMaterial(color: .white, isMetallic: false)
+                        
+                        // Normalize the image to prevent Metal storage mode crashes
+                        let safeImage = parent.artworkImage.normalizedForRealityKit() ?? parent.artworkImage
+                        
+                        if let cgImage = safeImage.cgImage {
+                            do {
+                                let texture = try TextureResource.generate(from: cgImage, options: .init(semantic: .color))
+                                material.color = .init(tint: .white, texture: .init(texture))
+                            } catch {
+                                print("Failed to generate texture: \(error)")
+                            }
+                        }
             
             let modelEntity = ModelEntity(mesh: mesh, materials: [material])
             
@@ -96,6 +99,21 @@ struct ARViewContainer: UIViewRepresentable {
             
             anchorEntity.addChild(modelEntity)
             arView.scene.addAnchor(anchorEntity)
+        }
+    }
+}
+
+extension UIImage {
+    /// Redraws the image into a standard context to strip out incompatible color spaces
+    /// or memory modes that cause RealityKit Metal crashes.
+    func normalizedForRealityKit() -> UIImage? {
+        let format = UIGraphicsImageRendererFormat()
+        format.scale = 1.0 // Keep scale at 1.0 to map pixels 1:1
+        format.opaque = false
+        
+        let renderer = UIGraphicsImageRenderer(size: self.size, format: format)
+        return renderer.image { _ in
+            self.draw(in: CGRect(origin: .zero, size: self.size))
         }
     }
 }

@@ -6,6 +6,8 @@
 //
 
 // Views/Screens/ARPreviewView.swift
+// Views/Screens/ARPreviewView.swift
+// Views/Screens/ARPreviewView.swift
 import SwiftUI
 
 struct ARPreviewView: View {
@@ -16,21 +18,21 @@ struct ARPreviewView: View {
         ZStack {
             if let uiImage = uiImage {
                 ARViewContainer(project: project, artworkImage: uiImage)
-                    .ignoresSafeArea()
+                    // ONLY ignore the bottom so the Back button remains clickable at the top
+                    .edgesIgnoringSafeArea(.bottom)
                 
                 VStack {
                     Spacer()
-                    // Instruction Overlay
                     Text("Scan the floor and tap to place your \(project.productType.rawValue). You can drag to move it.")
                         .font(.subheadline)
                         .multilineTextAlignment(.center)
                         .padding()
                         .background(.ultraThinMaterial)
                         .clipShape(RoundedRectangle(cornerRadius: 12))
-                        .padding()
+                        .padding(.bottom, 30) // Lift it up slightly
                 }
             } else {
-                VStack {
+                VStack(spacing: 12) {
                     ProgressView()
                     Text("Loading Artwork...")
                         .foregroundColor(.secondary)
