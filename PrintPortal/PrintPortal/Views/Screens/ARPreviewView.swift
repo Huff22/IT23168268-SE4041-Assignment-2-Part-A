@@ -86,23 +86,40 @@ struct ARPreviewView: View {
                     
                     Spacer()
                     
-                    // Camera Capture Button (Only shows when placed)
-                    if arState == .placed {
-                        Button(action: takeSnapshot) {
-                            ZStack {
-                                Circle()
-                                    .fill(Color.white.opacity(0.8))
-                                    .frame(width: 70, height: 70)
-                                Circle()
-                                    .stroke(Color.white, lineWidth: 4)
-                                    .frame(width: 80, height: 80)
-                                Image(systemName: "camera.fill")
-                                    .font(.title)
-                                    .foregroundColor(.black)
-                            }
-                        }
-                        .padding(.bottom, 40)
-                    }
+                    // Action Buttons (Only shows when placed)
+                                        if arState == .placed {
+                                            HStack(spacing: 40) {
+                                                // Camera Button
+                                                Button(action: takeSnapshot) {
+                                                    ZStack {
+                                                        Circle()
+                                                            .fill(Color.white.opacity(0.8))
+                                                            .frame(width: 70, height: 70)
+                                                        Circle()
+                                                            .stroke(Color.white, lineWidth: 4)
+                                                            .frame(width: 80, height: 80)
+                                                        Image(systemName: "camera.fill")
+                                                            .font(.title)
+                                                            .foregroundColor(.black)
+                                                    }
+                                                }
+                                                
+                                                // Save Position Button
+                                                Button(action: {
+                                                    NotificationCenter.default.post(name: Notification.Name("SaveARWorldMap"), object: nil)
+                                                }) {
+                                                    ZStack {
+                                                        Circle()
+                                                            .fill(Color.printPortalAccent)
+                                                            .frame(width: 70, height: 70)
+                                                        Image(systemName: "mapping.circle.fill")
+                                                            .font(.system(size: 74))
+                                                            .foregroundColor(.white)
+                                                    }
+                                                }
+                                            }
+                                            .padding(.bottom, 40)
+                                        }
                 }
                 
                 // Screen flash effect for the camera

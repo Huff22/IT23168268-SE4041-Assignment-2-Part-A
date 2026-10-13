@@ -6,6 +6,7 @@
 //
 // Services/Persistence/ArtworkStorageService.swift
 import UIKit
+import ARKit
 
 final class ArtworkStorageService {
     static let shared = ArtworkStorageService()
@@ -37,4 +38,21 @@ final class ArtworkStorageService {
         let fileURL = documentsDirectory.appendingPathComponent(filename)
         try? FileManager.default.removeItem(at: fileURL)
     }
+    
+    // MARK: - ARWorldMap Persistence
+        
+        func saveWorldMap(_ worldMap: ARWorldMap, id: UUID) throws {
+            // Securely encode the complex 3D room data into a binary format
+            let data = try NSKeyedArchiver.archivedData(withRootObject: worldMap, requiringSecureCoding: true)
+            let fileURL = documentsDirectory.appendingPathComponent("\(id.uuidString)_worldmap.data")
+            try data.write(to: fileURL)
+        }
+        
+        func loadWorldMap(id: UUID) -> ARWorldMap? {
+            let fileURL = documentsDirectory.appendingPathComponent("\(id.uuidString)_worldmap.data")
+            guard let data = try? Data(contentsOf: fileURL) else { return nil }
+            
+            // Decode the binary data back into an ARKit World Map
+            return try? NSKeyedUnarchiver.unarchivedObject(ofClass: ARWorldMap.self, from: data)
+        }
 }
