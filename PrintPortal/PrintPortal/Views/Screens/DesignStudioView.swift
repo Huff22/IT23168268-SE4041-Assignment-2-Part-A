@@ -18,8 +18,7 @@ struct DesignStudioView: View {
     
     // Form State
     @State private var title: String = ""
-    @State private var widthMeters: Float
-    @State private var heightMeters: Float
+    @State private var selectedSize: ProductSize
     
     // Photo Picker State
     @State private var selectedItem: PhotosPickerItem?
@@ -30,31 +29,19 @@ struct DesignStudioView: View {
     
     init(product: ProductType) {
         self.product = product
-        // Initialize dimensions with product defaults
-        _widthMeters = State(initialValue: product.defaultWidthMeters)
-        _heightMeters = State(initialValue: product.defaultHeightMeters)
+        _selectedSize = State(initialValue: product.availableSizes.first!)
     }
     
     var body: some View {
         Form {
             Section(header: Text("Project Details")) {
-                TextField("Project Name (e.g. Summer Promo)", text: $title)
-                
-                HStack {
-                    Text("Width (m)")
-                    Spacer()
-                    TextField("Width", value: $widthMeters, format: .number)
-                        .keyboardType(.decimalPad)
-                        .multilineTextAlignment(.trailing)
-                }
-                
-                HStack {
-                    Text("Height (m)")
-                    Spacer()
-                    TextField("Height", value: $heightMeters, format: .number)
-                        .keyboardType(.decimalPad)
-                        .multilineTextAlignment(.trailing)
-                }
+                            TextField("Project Name (e.g. Summer Promo)", text: $title)
+                            
+                            Picker("Select Size", selection: $selectedSize) {
+                                ForEach(product.availableSizes, id: \.self) { size in
+                                    Text(size.display).tag(size)
+                                }
+                            }
             }
             
             Section(header: Text("Artwork"), footer: Text(resolutionWarning ? "Warning: Image resolution might be too low for high-quality printing." : "Upload a high-resolution image for best results.")
@@ -137,11 +124,11 @@ struct DesignStudioView: View {
             }
             
             let newProject = DesignProject(
-                title: title,
-                productType: product,
-                widthMeters: widthMeters,
-                heightMeters: heightMeters,
-                artworkFilename: savedFilename
+                    title: title,
+                    productType: product,
+                    widthMeters: selectedSize.widthMeters,
+                    heightMeters: selectedSize.heightMeters,
+                    artworkFilename: savedFilename
             )
             newProject.id = newProjectId
             

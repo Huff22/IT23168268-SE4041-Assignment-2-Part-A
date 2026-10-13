@@ -9,24 +9,40 @@ import SwiftUI
 import RealityKit
 import ARKit
 
+enum ARUIState {
+    case scanning
+    case readyToPlace
+    case placed
+}
+
 struct ARViewContainer: UIViewRepresentable {
     let project: DesignProject
     let artworkImage: UIImage
+    @Binding var arState: ARUIState
     
     func makeUIView(context: Context) -> ARView {
-            // Explicitly set AR camera mode
             let arView = ARView(frame: .zero, cameraMode: .ar, automaticallyConfigureSession: false)
             
             let config = ARWorldTrackingConfiguration()
             config.planeDetection = [.horizontal]
             config.environmentTexturing = .automatic
             
-            // Run with options to force restart tracking if it was paused by the permission prompt
             arView.session.run(config, options: [.resetTracking, .removeExistingAnchors])
+            
+            // Listen for plane detection to update UI
+            arView.session.delegate = context.coordinator
             
             let tapGesture = UITapGestureRecognizer(target: context.coordinator, action: #selector(Coordinator.handleTap))
             arView.addGestureRecognizer(tapGesture)
             context.coordinator.arView = arView
+            
+            // Listen for Snapshot trigger from SwiftUI
+            NotificationCenter.default.addObserver(forName: Notification.Name("TakeARSnapshot"), object: nil, queue: .main) { _ in
+                arView.snapshot(saveToHDR: false) { image in
+                    guard let image = image else { return }
+                    UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+                }
+            }
             
             return arView
         }
@@ -37,13 +53,20 @@ struct ARViewContainer: UIViewRepresentable {
         Coordinator(self)
     }
     
-    class Coordinator: NSObject {
+    class Coordinator: NSObject, ARSessionDelegate {
         var parent: ARViewContainer
         weak var arView: ARView?
         var isModelPlaced = false
         
         init(_ parent: ARViewContainer) {
             self.parent = parent
+        }
+        func session(_ session: ARSession, didAdd anchors: [ARAnchor]) {
+                    if let _ = anchors.first(where: { $0 is ARPlaneAnchor }), parent.arState == .scanning {
+                        DispatchQueue.main.async {
+                            self.parent.arState = .readyToPlace
+                        }
+                    }
         }
         
         @objc func handleTap(_ sender: UITapGestureRecognizer) {
@@ -57,6 +80,7 @@ struct ARViewContainer: UIViewRepresentable {
             if let firstResult = results.first {
                 placeSign(at: firstResult)
                 isModelPlaced = true // Prevent placing multiple signs for now
+                DispatchQueue.main.async { self.parent.arState = .placed }
             }
         }
         
@@ -94,21 +118,21 @@ struct ARViewContainer: UIViewRepresentable {
                     
                     switch project.productType {
                     case .aFrame:
-                        // Create an A-Frame out of two angled panels
-                        let thickness: Float = 0.02
-                        let panelMesh = MeshResource.generateBox(width: w, height: h, depth: thickness)
-                        
-                        // Front Panel (Tilted back)
-                        let frontPanel = ModelEntity(mesh: panelMesh, materials: [material])
-                        frontPanel.position = [0, h / 2, 0.15] // Shifted forward
-                        frontPanel.transform.rotation = simd_quatf(angle: .pi / 12, axis: [1, 0, 0]) // 15-degree tilt
-                        productEntity.addChild(frontPanel)
-                        
-                        // Back Panel (Tilted forward)
-                        let backPanel = ModelEntity(mesh: panelMesh, materials: [material])
-                        backPanel.position = [0, h / 2, -0.15] // Shifted backward
-                        backPanel.transform.rotation = simd_quatf(angle: -.pi / 12, axis: [1, 0, 0])
-                        productEntity.addChild(backPanel)
+                                    // Create an A-Frame out of two angled panels
+                                    let thickness: Float = 0.02
+                                    let panelMesh = MeshResource.generateBox(width: w, height: h, depth: thickness)
+                                    
+                                    // Front Panel (Tilted back towards center) - Fixed negative angle
+                                    let frontPanel = ModelEntity(mesh: panelMesh, materials: [material])
+                                    frontPanel.position = [0, h / 2, 0.15]
+                                    frontPanel.transform.rotation = simd_quatf(angle: -.pi / 12, axis: [1, 0, 0])
+                                    productEntity.addChild(frontPanel)
+                                    
+                                    // Back Panel (Tilted forward towards center) - Fixed positive angle
+                                    let backPanel = ModelEntity(mesh: panelMesh, materials: [material])
+                                    backPanel.position = [0, h / 2, -0.15]
+                                    backPanel.transform.rotation = simd_quatf(angle: .pi / 12, axis: [1, 0, 0])
+                                    productEntity.addChild(backPanel)
                         
                     case .rollupBanner:
                         // Base Cassette (The silver metal box on the floor)
@@ -140,16 +164,28 @@ struct ARViewContainer: UIViewRepresentable {
 }
 
 extension UIImage {
-    /// Redraws the image into a standard context to strip out incompatible color spaces
-    /// or memory modes that cause RealityKit Metal crashes.
+    /// Redraws the image into a standard context and downsamples it to prevent memory (OOM) crashes in RealityKit.
     func normalizedForRealityKit() -> UIImage? {
+        // Cap the maximum dimension to 1024 pixels to save memory
+        let maxDimension: CGFloat = 1024
+        var targetSize = self.size
+        
+        if size.width > maxDimension || size.height > maxDimension {
+            let ratio = size.width / size.height
+            if ratio > 1 {
+                targetSize = CGSize(width: maxDimension, height: maxDimension / ratio)
+            } else {
+                targetSize = CGSize(width: maxDimension * ratio, height: maxDimension)
+            }
+        }
+        
         let format = UIGraphicsImageRendererFormat()
-        format.scale = 1.0 // Keep scale at 1.0 to map pixels 1:1
+        format.scale = 1.0 // Prevent display-scale multiplication
         format.opaque = false
         
-        let renderer = UIGraphicsImageRenderer(size: self.size, format: format)
+        let renderer = UIGraphicsImageRenderer(size: targetSize, format: format)
         return renderer.image { _ in
-            self.draw(in: CGRect(origin: .zero, size: self.size))
+            self.draw(in: CGRect(origin: .zero, size: targetSize))
         }
     }
 }

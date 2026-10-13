@@ -5,7 +5,17 @@
 //  Created by Hafsa Faleel on 2026-10-11.
 //
 // Models/ProductType.swift
+// Models/ProductType.swift
 import Foundation
+
+struct ProductSize: Hashable {
+    let widthInches: Float
+    let heightInches: Float
+    
+    var display: String { "\(Int(widthInches))\" × \(Int(heightInches))\"" }
+    var widthMeters: Float { widthInches * 0.0254 }
+    var heightMeters: Float { heightInches * 0.0254 }
+}
 
 enum ProductType: String, Codable, CaseIterable, Identifiable {
     case aFrame = "A-Frame Sign"
@@ -14,30 +24,28 @@ enum ProductType: String, Codable, CaseIterable, Identifiable {
     
     var id: String { rawValue }
     
-    var defaultWidthMeters: Float {
+    var availableSizes: [ProductSize] {
         switch self {
-        case .aFrame: return 0.60       // 60 cm wide
-        case .rollupBanner: return 0.85 // 85 cm wide
-        case .rigidBoard: return 0.50   // 50 cm wide
+        case .aFrame:
+            return [ProductSize(widthInches: 18, heightInches: 24),
+                    ProductSize(widthInches: 24, heightInches: 36)]
+        case .rollupBanner:
+            return [ProductSize(widthInches: 33, heightInches: 81)]
+        case .rigidBoard:
+            return [ProductSize(widthInches: 12, heightInches: 18),
+                    ProductSize(widthInches: 18, heightInches: 24)]
         }
     }
     
-    var defaultHeightMeters: Float {
-        switch self {
-        case .aFrame: return 0.90       // 90 cm high
-        case .rollupBanner: return 2.00 // 200 cm high
-        case .rigidBoard: return 0.70   // 70 cm high
-        }
-    }
+    // We keep these defaults for fallback safety
+    var defaultWidthMeters: Float { availableSizes.first!.widthMeters }
+    var defaultHeightMeters: Float { availableSizes.first!.heightMeters }
     
     var description: String {
         switch self {
-        case .aFrame:
-            return "Pavement sidewalk display with dual printable surfaces."
-        case .rollupBanner:
-            return "Retractable floor-standing banner with an aluminium cassette."
-        case .rigidBoard:
-            return "Flat, rigid structural board sign with rear mount support."
+        case .aFrame: return "Pavement sidewalk display with dual printable surfaces."
+        case .rollupBanner: return "Retractable floor-standing banner with an aluminium cassette."
+        case .rigidBoard: return "Flat, rigid structural board sign with rear mount support."
         }
     }
 }

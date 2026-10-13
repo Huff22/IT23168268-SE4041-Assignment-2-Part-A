@@ -8,12 +8,10 @@
 import SwiftUI
 
 extension Color {
-    /// Accent color: #761731 (Deep Maroon / Burgundy)
+    /// Accent color: #761731 (Deep Maroon / Burgundy) remains the same
     static let printPortalAccent = Color(red: 0x76 / 255.0, green: 0x17 / 255.0, blue: 0x31 / 255.0)
     
-    /// Canvas/Screen background: #F2F4F8 (Cool Soft Grey)
-    static let printPortalBackground = Color(red: 0xF2 / 255.0, green: 0xF4 / 255.0, blue: 0xF8 / 255.0)
-    
-    /// Card / Surface container: #FFFFFF (Clean White)
-    static let printPortalCard = Color.white
+    /// Use iOS system grouped backgrounds so they automatically invert in Dark Mode
+    static let printPortalBackground = Color(UIColor.systemGroupedBackground)
+    static let printPortalCard = Color(UIColor.secondarySystemGroupedBackground)
 }
