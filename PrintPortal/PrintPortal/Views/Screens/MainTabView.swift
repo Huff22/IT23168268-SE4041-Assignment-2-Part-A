@@ -1,9 +1,3 @@
-//
-//  MainTabView.swift
-//  PrintPortal
-//
-//  Created by Hafsa Faleel on 2026-10-11.
-//
 // Views/Screens/MainTabView.swift
 import SwiftUI
 
@@ -16,17 +10,25 @@ struct MainTabView: View {
                 CatalogueView()
             }
             .tabItem {
-                Label("Catalogue", systemImage: "square.grid.2x2")
+                Label("Home", systemImage: "house.fill")
             }
             .tag(0)
+            
+            NavigationStack {
+                FavoritesView()
+            }
+            .tabItem {
+                Label("Favorites", systemImage: "heart.fill")
+            }
+            .tag(1)
             
             NavigationStack {
                 ProjectsListView()
             }
             .tabItem {
-                Label("My Projects", systemImage: "folder")
+                Label("My Projects", systemImage: "folder.fill")
             }
-            .tag(1)
+            .tag(2)
         }
         .tint(.printPortalAccent)
     }

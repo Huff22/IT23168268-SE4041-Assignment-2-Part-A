@@ -7,6 +7,7 @@ struct ARPreviewView: View {
     @State private var arState: ARUIState = .scanning
     @State private var showFlash = false
     @Environment(\.dismiss) private var dismiss // Used for our custom back button
+    @State private var showingQuoteForm = false
     
     var body: some View {
         ZStack {
@@ -117,7 +118,21 @@ struct ARPreviewView: View {
                                                             .foregroundColor(.white)
                                                     }
                                                 }
+                                                
+                                                // Request Quote Button
+                                                                            Button(action: { showingQuoteForm = true }) {
+                                                                                ZStack {
+                                                                                    Circle()
+                                                                                        .fill(Color.printPortalAccent)
+                                                                                        .frame(width: 70, height: 70)
+                                                                                    Image(systemName: "paperplane.fill")
+                                                                                        .font(.title)
+                                                                                        .foregroundColor(.white)
+                                                                                }
+                                                                            }
                                             }
+                                            
+                                            
                                             .padding(.bottom, 40)
                                         }
                 }
@@ -136,6 +151,10 @@ struct ARPreviewView: View {
                 }
             }
         }
+        .sheet(isPresented: $showingQuoteForm) {
+                    RequestQuoteView(project: project, artworkImage: uiImage)
+                }
+        
         .toolbar(.hidden, for: .navigationBar) // Hides the default iOS navigation bar
         .onAppear {
             loadImage()

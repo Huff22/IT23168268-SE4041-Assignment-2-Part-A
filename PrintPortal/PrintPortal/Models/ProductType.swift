@@ -48,4 +48,34 @@ enum ProductType: String, Codable, CaseIterable, Identifiable {
         case .rigidBoard: return "Flat, rigid structural board sign with rear mount support."
         }
     }
+    
+    // UI Assets and Details
+        var iconSystemName: String {
+            switch self {
+            case .aFrame: return "signpost.right.and.left.fill"
+            case .rollupBanner: return "scroll.fill"
+            case .rigidBoard: return "rectangle.portrait.fill"
+            }
+        }
+    
+    // The exact name of the image in Assets.xcassets
+        var imageAssetName: String {
+            switch self {
+            case .aFrame: return "aframe_img"
+            case .rollupBanner: return "rollup_img"
+            case .rigidBoard: return "rigid_img"
+            }
+        }
+    
+        var detailBullets: [String] {
+            var bullets = [String]()
+            bullets.append(self.description)
+            bullets.append("Available sizes:")
+            for size in availableSizes {
+                bullets.append("• \(size.display) (\(String(format: "%.2f", size.widthMeters))m × \(String(format: "%.2f", size.heightMeters))m)")
+            }
+            bullets.append("• Full-color UV resistant printing")
+            bullets.append("• Indoor and outdoor durable")
+            return bullets
+        }
 }

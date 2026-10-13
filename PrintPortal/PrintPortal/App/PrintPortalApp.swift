@@ -16,6 +16,6 @@ struct PrintPortalApp: App {
             MainTabView()
                 .tint(Color.printPortalAccent)
         }
-        .modelContainer(for: [DesignProject.self])
+        .modelContainer(for: [DesignProject.self, OrderEnquiry.self, FavoriteProduct.self])
     }
 }
