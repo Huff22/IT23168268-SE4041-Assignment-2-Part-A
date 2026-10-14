@@ -74,7 +74,7 @@ struct ProductDetailsView: View {
             VStack {
                 Divider()
                 NavigationLink(destination: DesignStudioView(product: product)) {
-                    Text("Create New Project")
+                    Text("Upload Design")
                         .font(.headline)
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)

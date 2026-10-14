@@ -29,6 +29,14 @@ struct MainTabView: View {
                 Label("My Projects", systemImage: "folder.fill")
             }
             .tag(2)
+            
+            NavigationStack {
+                            ProfileView()
+                        }
+                        .tabItem {
+                            Label("Profile", systemImage: "person.crop.circle")
+                        }
+                        .tag(3)
         }
         .tint(.printPortalAccent)
     }

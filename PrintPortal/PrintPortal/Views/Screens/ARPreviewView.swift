@@ -1,5 +1,6 @@
 // Views/Screens/ARPreviewView.swift
 import SwiftUI
+import SwiftData
 
 struct ARPreviewView: View {
     let project: DesignProject
@@ -8,6 +9,8 @@ struct ARPreviewView: View {
     @State private var showFlash = false
     @Environment(\.dismiss) private var dismiss // Used for our custom back button
     @State private var showingQuoteForm = false
+    @Query private var profiles: [UserProfile]
+    @State private var showingAccountPrompt = false
     
     var body: some View {
         ZStack {
@@ -120,7 +123,13 @@ struct ARPreviewView: View {
                                                 }
                                                 
                                                 // Request Quote Button
-                                                                            Button(action: { showingQuoteForm = true }) {
+                                                                            Button(action: {
+                                                                                if profiles.isEmpty {
+                                                                                    showingAccountPrompt = true // Intercept!
+                                                                                } else {
+                                                                                    showingQuoteForm = true
+                                                                                }
+                                                                            }) {
                                                                                 ZStack {
                                                                                     Circle()
                                                                                         .fill(Color.printPortalAccent)
@@ -153,6 +162,12 @@ struct ARPreviewView: View {
         }
         .sheet(isPresented: $showingQuoteForm) {
                     RequestQuoteView(project: project, artworkImage: uiImage)
+                }
+        
+        .sheet(isPresented: $showingAccountPrompt) {
+                    NavigationStack {
+                        ProfileView()
+                    }
                 }
         
         .toolbar(.hidden, for: .navigationBar) // Hides the default iOS navigation bar

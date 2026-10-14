@@ -70,7 +70,7 @@ struct DesignStudioView: View {
             
             Section {
                 Button(action: saveProject) {
-                    Text("Save & Continue to AR Preview")
+                    Text("Save & Continue")
                         .frame(maxWidth: .infinity)
                         .bold()
                 }

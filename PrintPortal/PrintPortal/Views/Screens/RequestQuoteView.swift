@@ -11,6 +11,7 @@ import SwiftData
 import MessageUI
 
 struct RequestQuoteView: View {
+    @Query private var profiles: [UserProfile]
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
     
@@ -94,6 +95,12 @@ struct RequestQuoteView: View {
                     result: $mailResult
                 )
             }
+            
+            .onAppear {
+                    if let user = profiles.first {
+                        contactDetails = user.email // Auto-fill
+                    }
+                }
         }
     }
     
