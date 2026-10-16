@@ -117,7 +117,7 @@ struct ARViewContainer: UIViewRepresentable {
             // 2. Generate the custom RealityKit material from the user's artwork
             if let cgImage = safeImage.cgImage {
                 do {
-                    let texture = try TextureResource.generate(from: cgImage, options: .init(semantic: .color))
+                    let texture = try TextureResource(image: cgImage, options: .init(semantic: .color))
                     var customMaterial = SimpleMaterial(color: .white, isMetallic: false)
                     customMaterial.color = .init(tint: .white, texture: .init(texture))
                     
