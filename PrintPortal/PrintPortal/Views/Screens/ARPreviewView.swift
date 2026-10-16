@@ -53,22 +53,7 @@ struct ARPreviewView: View {
                                             }
                                             
                                             Spacer()
-                                            
-                                            // Save Pill Button (Top Right)
-                                            if arState == .placed {
-                                                Button(action: {
-                                                    NotificationCenter.default.post(name: Notification.Name("SaveARWorldMap"), object: nil)
-                                                }) {
-                                                    Text("Save")
-                                                        .font(.subheadline)
-                                                        .bold()
-                                                        .foregroundColor(.white)
-                                                        .padding(.horizontal, 20)
-                                                        .padding(.vertical, 10)
-                                                        .background(Color.printPortalAccent)
-                                                        .clipShape(Capsule())
-                                                }
-                                            }
+                                        
                                         }
                                     }
                                     .padding(.horizontal)
