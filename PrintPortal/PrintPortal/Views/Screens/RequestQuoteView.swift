@@ -29,18 +29,32 @@ struct RequestQuoteView: View {
     var body: some View {
         NavigationStack {
             Form {
+                // Artwork preview (shown only if an image was passed in)
+                if let artworkImage {
+                    Section {
+                        Image(uiImage: artworkImage)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(maxWidth: .infinity)
+                            .frame(maxHeight: 160)
+                            .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                    .strokeBorder(Color(UIColor.separator).opacity(0.35), lineWidth: 0.5)
+                            )
+                            .shadow(color: .black.opacity(0.08), radius: 8, y: 4)
+                            .padding(.vertical, 4)
+                            .accessibilityHidden(true)
+                    }
+                    .listRowBackground(Color.clear)
+                }
+                
                 Section(header: Text("Product Details")) {
-                    HStack {
-                        Text("Product")
-                        Spacer()
-                        Text(project.productType.rawValue).foregroundColor(.secondary)
-                    }
-                    HStack {
-                        Text("Size")
-                        Spacer()
-                        Text("\(String(format: "%.2f", project.widthMeters))m × \(String(format: "%.2f", project.heightMeters))m")
-                            .foregroundColor(.secondary)
-                    }
+                    LabeledContent("Product", value: project.productType.rawValue)
+                    LabeledContent(
+                        "Size",
+                        value: "\(String(format: "%.2f", project.widthMeters))m × \(String(format: "%.2f", project.heightMeters))m"
+                    )
                 }
                 
                 Section(header: Text("Order Requirements")) {
@@ -48,23 +62,40 @@ struct RequestQuoteView: View {
                         HStack {
                             Text("Quantity")
                             Spacer()
-                            Text("\(quantity)").bold()
+                            Text("\(quantity)")
+                                .font(.body.weight(.semibold))
+                                .monospacedDigit()
+                                .foregroundStyle(Color.printPortalAccent)
                         }
                     }
                     
-                    VStack(alignment: .leading) {
-                        Text("Printing requirements").font(.caption).foregroundColor(.secondary)
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text("Printing requirements")
+                            .font(.caption.weight(.medium))
+                            .foregroundStyle(.secondary)
                         TextField("e.g. Matte finish, double-sided", text: $requirements, axis: .vertical)
                             .lineLimit(3...6)
                     }
+                    .padding(.vertical, 2)
                 }
                 
-                Section(header: Text("Contact Details")) {
+                Section(
+                    header: Text("Contact Details"),
+                    footer: Group {
+                        if contactDetails.isEmpty {
+                            Text("Add an email or phone number to submit.")
+                        }
+                    }
+                ) {
                     TextField("Email or phone number", text: $contactDetails)
                         .keyboardType(.emailAddress)
-                        .autocapitalization(.none)
+                        .textInputAutocapitalization(.never)
                 }
             }
+            .tint(Color.printPortalAccent)
+            .scrollContentBackground(.hidden)
+            .background(Color.printPortalBackground.ignoresSafeArea())
+            .animation(.easeInOut(duration: 0.2), value: contactDetails.isEmpty)
             .navigationTitle("Request a Quote")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -82,6 +113,7 @@ struct RequestQuoteView: View {
                             dismiss()
                         }
                     }
+                    .bold()
                     .disabled(contactDetails.isEmpty)
                 }
             }
@@ -97,10 +129,10 @@ struct RequestQuoteView: View {
             }
             
             .onAppear {
-                    if let user = profiles.first {
-                        contactDetails = user.email // Auto-fill
-                    }
+                if let user = profiles.first {
+                    contactDetails = user.email // Auto-fill
                 }
+            }
         }
     }
     

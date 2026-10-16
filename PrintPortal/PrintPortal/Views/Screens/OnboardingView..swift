@@ -20,7 +20,7 @@ struct OnboardingView: View {
     let steps = [
         OnboardingStep(title: "Visualize Your Prints", subtitle: "See exactly how your signs and banners look in the real world before you order.", iconName: "arkit"),
         OnboardingStep(title: "Design with Precision", subtitle: "Upload your custom artwork and map it perfectly onto accurate 3D models.", iconName: "ruler.fill"),
-        OnboardingStep(title: "Request a Quote", subtitle: "Happy with the preview? Send an enquiry to us directly from the app.", iconName: "paperplane.fill")
+        OnboardingStep(title: "Request a Quote", subtitle: "Happy with the preview? Send us an enquiry directly from the app.", iconName: "paperplane.fill")
     ]
     
     var body: some View {
@@ -31,9 +31,10 @@ struct OnboardingView: View {
                 Button("Skip") {
                     finishOnboarding()
                 }
-                .font(.headline.bold())
-                .foregroundColor(.printPortalAccent)
-                .padding()
+                .font(.headline)
+                .foregroundStyle(Color.printPortalAccent)
+                .padding(.horizontal, 24)
+                .padding(.vertical, 16)
             }
             
             Spacer()
@@ -41,22 +42,32 @@ struct OnboardingView: View {
             // Central Content
             TabView(selection: $currentStep) {
                 ForEach(0..<steps.count, id: \.self) { index in
-                    VStack(spacing: 24) {
-                        Image(systemName: steps[index].iconName)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 150, height: 150)
-                            .foregroundColor(.printPortalAccent)
-                            .padding(.bottom, 30)
+                    VStack(spacing: 16) {
+                        ZStack {
+                            Circle()
+                                .fill(Color.printPortalAccent.opacity(0.1))
+                                .frame(width: 200, height: 200)
+                            Circle()
+                                .strokeBorder(Color.printPortalAccent.opacity(0.15), lineWidth: 1)
+                                .frame(width: 200, height: 200)
+                            Image(systemName: steps[index].iconName)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 90, height: 90)
+                                .foregroundStyle(Color.printPortalAccent)
+                        }
+                        .padding(.bottom, 24)
+                        .accessibilityHidden(true)
                         
                         Text(steps[index].title)
-                            .font(.title)
-                            .bold()
+                            .font(.title.weight(.bold))
                             .multilineTextAlignment(.center)
+                            .accessibilityAddTraits(.isHeader)
                         
                         Text(steps[index].subtitle)
                             .font(.body)
-                            .foregroundColor(.secondary)
+                            .foregroundStyle(.secondary)
+                            .lineSpacing(3)
                             .multilineTextAlignment(.center)
                             .padding(.horizontal, 32)
                     }
@@ -74,22 +85,29 @@ struct OnboardingView: View {
                     withAnimation { if currentStep > 0 { currentStep -= 1 } }
                 }) {
                     Image(systemName: "arrow.left")
-                        .foregroundColor(currentStep > 0 ? .printPortalAccent : .clear)
-                        .padding(16)
-                        .background(Circle().stroke(currentStep > 0 ? Color.gray.opacity(0.3) : Color.clear, lineWidth: 1))
+                        .font(.headline)
+                        .foregroundStyle(Color.printPortalAccent)
+                        .frame(width: 52, height: 52)
+                        .background(Circle().strokeBorder(Color(UIColor.separator), lineWidth: 1))
+                        .opacity(currentStep > 0 ? 1 : 0)
                 }
+                .buttonStyle(OnboardingButtonStyle())
                 .disabled(currentStep == 0)
+                .accessibilityLabel("Back")
                 
                 Spacer()
                 
                 // Page Indicators
                 HStack(spacing: 8) {
                     ForEach(0..<steps.count, id: \.self) { index in
-                        Circle()
-                            .fill(index == currentStep ? Color.printPortalAccent : Color.gray.opacity(0.3))
-                            .frame(width: 8, height: 8)
+                        Capsule()
+                            .fill(index == currentStep ? Color.printPortalAccent : Color(UIColor.tertiaryLabel).opacity(0.5))
+                            .frame(width: index == currentStep ? 24 : 8, height: 8)
                     }
                 }
+                .animation(.easeInOut(duration: 0.25), value: currentStep)
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel("Step \(currentStep + 1) of \(steps.count)")
                 
                 Spacer()
                 
@@ -104,10 +122,15 @@ struct OnboardingView: View {
                     }
                 }) {
                     Image(systemName: currentStep == steps.count - 1 ? "checkmark" : "arrow.right")
-                        .foregroundColor(.white)
-                        .padding(16)
+                        .font(.headline)
+                        .foregroundStyle(.white)
+                        .frame(width: 52, height: 52)
                         .background(Circle().fill(Color.printPortalAccent))
+                        .shadow(color: Color.printPortalAccent.opacity(0.3), radius: 8, x: 0, y: 4)
+                        .contentTransition(.symbolEffect(.replace))
                 }
+                .buttonStyle(OnboardingButtonStyle())
+                .accessibilityLabel(currentStep == steps.count - 1 ? "Get started" : "Next")
             }
             .padding(.horizontal, 24)
             .padding(.bottom, 40)
@@ -119,5 +142,14 @@ struct OnboardingView: View {
         withAnimation {
             hasSeenOnboarding = true
         }
+    }
+}
+
+// Subtle press feedback for the round navigation buttons (actions unchanged)
+private struct OnboardingButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .scaleEffect(configuration.isPressed ? 0.92 : 1)
+            .animation(.easeOut(duration: 0.12), value: configuration.isPressed)
     }
 }

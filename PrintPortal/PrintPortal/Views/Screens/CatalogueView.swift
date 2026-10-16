@@ -8,7 +8,7 @@ struct CatalogueView: View {
     @Environment(\.modelContext) private var modelContext
     
     let allProducts = ProductType.allCases
-    let columns = [GridItem(.flexible()), GridItem(.flexible())]
+    let columns = [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)]
     
     var filteredProducts: [ProductType] {
         if searchText.isEmpty { return allProducts }
@@ -19,28 +19,25 @@ struct CatalogueView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
                 // Custom Logo Header
-                                Image("AppNameLogo")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(height: 30) // Adjust this up or down to make it the perfect size
-                                    .padding(.horizontal)
-                                    .padding(.top, 10)
+                Image("AppNameLogo")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: 30)
+                    .padding(.horizontal)
+                    .padding(.top, 10)
                 
                 // Search Bar
-                HStack {
+                HStack(spacing: 10) {
                     Image(systemName: "magnifyingglass")
-                        .foregroundColor(.gray)
+                        .foregroundStyle(.secondary)
                     TextField("Search products...", text: $searchText)
                 }
-                .padding(12)
-                .background(Color.white)
-                .clipShape(RoundedRectangle(cornerRadius: 12))
-                .shadow(color: .black.opacity(0.05), radius: 5, y: 2)
+                .printPortalCard(padding: 12, cornerRadius: 12)
                 .padding(.horizontal)
                 
                 Text("Featured Products")
-                    .font(.title3)
-                    .bold()
+                    .font(.title3.weight(.semibold))
+                    .accessibilityAddTraits(.isHeader)
                     .padding(.horizontal)
                 
                 // 2-Column Grid
@@ -53,16 +50,21 @@ struct CatalogueView: View {
                                 onFavoriteToggle: { toggleFavorite(for: product) }
                             )
                         }
-                        .buttonStyle(PlainButtonStyle())
+                        .buttonStyle(ProductCardButtonStyle())
                     }
                 }
                 .padding(.horizontal)
+                .animation(.easeInOut(duration: 0.2), value: searchText)
+                
+                // Empty state when a search matches nothing
+                if filteredProducts.isEmpty {
+                    ContentUnavailableView.search(text: searchText)
+                        .padding(.top, 24)
+                }
             }
             .padding(.vertical)
         }
         .background(Color.printPortalBackground.ignoresSafeArea())
-        .background(Color.printPortalBackground.ignoresSafeArea())
-        .navigationBarTitleDisplayMode(.inline) // Keep this to reduce whitespace
         .navigationBarTitleDisplayMode(.inline)
     }
     
@@ -76,6 +78,15 @@ struct CatalogueView: View {
     }
 }
 
+// Subtle press feedback for tappable cards (navigation still handled by NavigationLink)
+private struct ProductCardButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .scaleEffect(configuration.isPressed ? 0.97 : 1)
+            .animation(.easeOut(duration: 0.15), value: configuration.isPressed)
+    }
+}
+
 // Reusable 2-Column Card Component
 struct ProductCardView: View {
     let product: ProductType
@@ -83,28 +94,16 @@ struct ProductCardView: View {
     let onFavoriteToggle: () -> Void
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: 0) {
             // Image Box
-            
-                        ZStack(alignment: .topTrailing) {
-                            Image(product.imageAssetName)
-                                .resizable()
-                                .scaledToFill()
-                                .frame(height: 120)
-                                .frame(maxWidth: .infinity)
-                                .clipShape(
-                                    // Only round the top corners for the card image
-                                    .rect(
-                                        topLeadingRadius: 12,
-                                        bottomLeadingRadius: 0,
-                                        bottomTrailingRadius: 0,
-                                        topTrailingRadius: 12
-                                    )
-                                )
-                                .clipped()
-                            
-                            
-                        }
+            ZStack(alignment: .topTrailing) {
+                Image(product.imageAssetName)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 130)
+                    .clipped()
+            }
             
             VStack(alignment: .leading, spacing: 4) {
                 Text(product.rawValue)
@@ -113,13 +112,12 @@ struct ProductCardView: View {
                 
                 Text(product.availableSizes.first?.display ?? "")
                     .font(.caption)
-                    .foregroundColor(.secondary)
+                    .foregroundStyle(.secondary)
             }
-            .padding(.horizontal, 8)
-            .padding(.bottom, 12)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(12)
         }
-        .background(Color.white)
-        .clipShape(RoundedRectangle(cornerRadius: 12))
-        .shadow(color: .black.opacity(0.06), radius: 8, x: 0, y: 4)
+        // Shared card style; it also clips the image to the rounded top corners
+        .printPortalCard(padding: 0, cornerRadius: 14)
     }
 }
