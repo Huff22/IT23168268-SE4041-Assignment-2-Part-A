@@ -33,17 +33,7 @@ struct ProductDetailsView: View {
                                                 .clipShape(RoundedRectangle(cornerRadius: 16))
                                                 .clipped()
                                             
-                                            // Heart Button
-                                            Button(action: toggleFavorite) {
-                                                Image(systemName: isFavorite ? "heart.fill" : "heart")
-                                                    .font(.title3)
-                                                    .foregroundColor(isFavorite ? .printPortalAccent : .gray)
-                                                    .padding(12)
-                                                    .background(Color.white)
-                                                    .clipShape(Circle())
-                                                    .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
-                                            }
-                                            .padding(16)
+                                            
                                         }
                                         .padding(.horizontal)
                     
@@ -74,7 +64,7 @@ struct ProductDetailsView: View {
             VStack {
                 Divider()
                 NavigationLink(destination: DesignStudioView(product: product)) {
-                    Text("Upload Design")
+                    Text("Upload Your Design")
                         .font(.headline)
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
@@ -89,6 +79,16 @@ struct ProductDetailsView: View {
         .background(Color.printPortalBackground.ignoresSafeArea())
         .navigationTitle("Product Details")
         .navigationBarTitleDisplayMode(.inline)
+        
+        .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(action: toggleFavorite) {
+                            Image(systemName: isFavorite ? "heart.fill" : "heart")
+                                .font(.headline)
+                                .foregroundColor(isFavorite ? .printPortalAccent : .gray)
+                        }
+                    }
+                }
     }
     
     private func toggleFavorite() {

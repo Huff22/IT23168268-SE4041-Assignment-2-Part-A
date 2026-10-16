@@ -25,126 +25,106 @@ struct ARPreviewView: View {
                 }
                 
                 VStack {
-                    // Custom Top Navigation Bar
-                    HStack {
-                        Button(action: { dismiss() }) {
-                            Image(systemName: "chevron.left")
-                                .font(.title3.bold())
-                                .foregroundColor(.primary)
-                                .frame(width: 44, height: 44)
-                                .background(.ultraThinMaterial)
-                                .clipShape(Circle())
-                        }
-                        
-                        Spacer()
-                        
-                        // Pill Shaped Title
-                        VStack(spacing: 2) {
-                            Text("Previewing")
-                                .font(.caption2)
-                                .foregroundColor(.secondary)
-                            Text(project.title)
-                                .font(.headline)
-                                .bold()
-                        }
-                        .padding(.horizontal, 24)
-                        .padding(.vertical, 8)
-                        .background(.ultraThinMaterial)
-                        .clipShape(Capsule())
-                        
-                        Spacer()
-                        
-                        // Invisible spacer to keep the title perfectly centered
-                        Color.clear.frame(width: 44, height: 44)
-                    }
-                    .padding(.horizontal)
-                    .padding(.top, 10)
-                    
-                    Spacer()
-                    
-                    // Centered Dynamic Instructions
-                    if arState == .scanning {
-                        VStack(spacing: 16) {
-                            ProgressView()
-                                .controlSize(.large)
-                                .tint(.white)
-                            Text("Scanning floor...\nMove your phone slightly.")
-                                .font(.headline)
-                                .foregroundColor(.white)
-                                .multilineTextAlignment(.center)
-                        }
-                        .padding(24)
-                        .background(Color.black.opacity(0.5))
-                        .clipShape(RoundedRectangle(cornerRadius: 16))
-                        
-                    } else if arState == .readyToPlace {
-                        Text("Floor detected!\nTap to place your \(project.productType.rawValue).")
-                            .font(.headline)
-                            .multilineTextAlignment(.center)
-                            .padding()
-                            .background(Color.green.opacity(0.9))
-                            .foregroundColor(.white)
-                            .clipShape(RoundedRectangle(cornerRadius: 16))
-                            .shadow(radius: 10)
-                    }
-                    
-                    Spacer()
-                    
-                    // Action Buttons (Only shows when placed)
-                                        if arState == .placed {
-                                            HStack(spacing: 40) {
-                                                // Camera Button
-                                                Button(action: takeSnapshot) {
-                                                    ZStack {
-                                                        Circle()
-                                                            .fill(Color.white.opacity(0.8))
-                                                            .frame(width: 70, height: 70)
-                                                        Circle()
-                                                            .stroke(Color.white, lineWidth: 4)
-                                                            .frame(width: 80, height: 80)
-                                                        Image(systemName: "camera.fill")
-                                                            .font(.title)
-                                                            .foregroundColor(.black)
-                                                    }
-                                                }
-                                                
-                                                // Save Position Button
+                                    // Custom Top Navigation Bar
+                                    ZStack {
+                                        // Centered Pill Title
+                                        VStack(spacing: 2) {
+                                            Text("Previewing")
+                                                .font(.caption2)
+                                                .foregroundColor(.secondary)
+                                            Text(project.title)
+                                                .font(.headline)
+                                                .bold()
+                                        }
+                                        .padding(.horizontal, 24)
+                                        .padding(.vertical, 8)
+                                        .background(.ultraThinMaterial)
+                                        .clipShape(Capsule())
+                                        
+                                        // Left & Right Buttons
+                                        HStack {
+                                            Button(action: { dismiss() }) {
+                                                Image(systemName: "chevron.left")
+                                                    .font(.title3.bold())
+                                                    .foregroundColor(.primary)
+                                                    .frame(width: 44, height: 44)
+                                                    .background(.ultraThinMaterial)
+                                                    .clipShape(Circle())
+                                            }
+                                            
+                                            Spacer()
+                                            
+                                            // Save Pill Button (Top Right)
+                                            if arState == .placed {
                                                 Button(action: {
                                                     NotificationCenter.default.post(name: Notification.Name("SaveARWorldMap"), object: nil)
                                                 }) {
-                                                    ZStack {
-                                                        Circle()
-                                                            .fill(Color.printPortalAccent)
-                                                            .frame(width: 70, height: 70)
-                                                        Image(systemName: "mapping.circle.fill")
-                                                            .font(.system(size: 74))
-                                                            .foregroundColor(.white)
-                                                    }
+                                                    Text("Save")
+                                                        .font(.subheadline)
+                                                        .bold()
+                                                        .foregroundColor(.white)
+                                                        .padding(.horizontal, 20)
+                                                        .padding(.vertical, 10)
+                                                        .background(Color.printPortalAccent)
+                                                        .clipShape(Capsule())
                                                 }
-                                                
-                                                // Request Quote Button
-                                                                            Button(action: {
-                                                                                if profiles.isEmpty {
-                                                                                    showingAccountPrompt = true // Intercept!
-                                                                                } else {
-                                                                                    showingQuoteForm = true
-                                                                                }
-                                                                            }) {
-                                                                                ZStack {
-                                                                                    Circle()
-                                                                                        .fill(Color.printPortalAccent)
-                                                                                        .frame(width: 70, height: 70)
-                                                                                    Image(systemName: "paperplane.fill")
-                                                                                        .font(.title)
-                                                                                        .foregroundColor(.white)
-                                                                                }
-                                                                            }
+                                            }
+                                        }
+                                    }
+                                    .padding(.horizontal)
+                                    .padding(.top, 10)
+                                    
+                                    Spacer()
+                                    
+                                    // Centered Dynamic Instructions (Scanning/Detected)
+                                    if arState == .scanning {
+                                        VStack(spacing: 16) {
+                                            ProgressView().controlSize(.large).tint(.white)
+                                            Text("Scanning floor...\nMove your phone slightly.")
+                                                .font(.headline).foregroundColor(.white).multilineTextAlignment(.center)
+                                        }
+                                        .padding(24).background(Color.black.opacity(0.5)).clipShape(RoundedRectangle(cornerRadius: 16))
+                                    } else if arState == .readyToPlace {
+                                        Text("Floor detected!\nTap to place your \(project.productType.rawValue).")
+                                            .font(.headline).multilineTextAlignment(.center).padding()
+                                            .background(Color.green.opacity(0.9)).foregroundColor(.white).clipShape(RoundedRectangle(cornerRadius: 16)).shadow(radius: 10)
+                                    }
+                                    
+                                    Spacer()
+                                    
+                                    // Bottom Action Bar (Camera & Quote)
+                                    if arState == .placed {
+                                        ZStack {
+                                            // Camera Button (Bottom Middle)
+                                            Button(action: takeSnapshot) {
+                                                ZStack {
+                                                    Circle().fill(Color.white.opacity(0.8)).frame(width: 70, height: 70)
+                                                    Circle().stroke(Color.white, lineWidth: 4).frame(width: 80, height: 80)
+                                                    Image(systemName: "camera.fill").font(.title).foregroundColor(.black)
+                                                }
                                             }
                                             
-                                            
-                                            .padding(.bottom, 40)
+                                            // Request Quote Button (Bottom Right)
+                                            HStack {
+                                                Spacer()
+                                                Button(action: {
+                                                    if profiles.isEmpty {
+                                                        showingAccountPrompt = true
+                                                    } else {
+                                                        showingQuoteForm = true
+                                                    }
+                                                }) {
+                                                    ZStack {
+                                                        Circle().fill(Color.printPortalAccent).frame(width: 60, height: 60)
+                                                        Image(systemName: "paperplane.fill").font(.title3).foregroundColor(.white)
+                                                    }
+                                                }
+                                            }
                                         }
-                }
+                                        .padding(.horizontal, 24)
+                                        .padding(.bottom, 40)
+                                    }
+                                }
                 
                 // Screen flash effect for the camera
                 if showFlash {
@@ -171,6 +151,7 @@ struct ARPreviewView: View {
                 }
         
         .toolbar(.hidden, for: .navigationBar) // Hides the default iOS navigation bar
+        .toolbar(.hidden, for: .tabBar)
         .onAppear {
             loadImage()
         }

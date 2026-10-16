@@ -18,6 +18,14 @@ struct CatalogueView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
+                // Custom Logo Header
+                                Image("AppNameLogo")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(height: 30) // Adjust this up or down to make it the perfect size
+                                    .padding(.horizontal)
+                                    .padding(.top, 10)
+                
                 // Search Bar
                 HStack {
                     Image(systemName: "magnifyingglass")
@@ -53,7 +61,9 @@ struct CatalogueView: View {
             .padding(.vertical)
         }
         .background(Color.printPortalBackground.ignoresSafeArea())
-        .navigationTitle("Home")
+        .background(Color.printPortalBackground.ignoresSafeArea())
+        .navigationBarTitleDisplayMode(.inline) // Keep this to reduce whitespace
+        .navigationBarTitleDisplayMode(.inline)
     }
     
     private func toggleFavorite(for product: ProductType) {

@@ -106,66 +106,91 @@ struct ARViewContainer: UIViewRepresentable {
             guard let arView = arView else { return }
             
             let anchorEntity = AnchorEntity(anchor: arAnchor)
-            var material = SimpleMaterial(color: .white, isMetallic: false)
             let safeImage = parent.artworkImage.normalizedForRealityKit() ?? parent.artworkImage
             
+            // 1. Load the customized USDZ and scale it dynamically
+            guard let productEntity = createProductEntity(for: parent.project) else {
+                print("Error: Could not create the USDZ entity.")
+                return
+            }
+            
+            // 2. Generate the custom RealityKit material from the user's artwork
             if let cgImage = safeImage.cgImage {
                 do {
                     let texture = try TextureResource.generate(from: cgImage, options: .init(semantic: .color))
-                    material.color = .init(tint: .white, texture: .init(texture))
+                    var customMaterial = SimpleMaterial(color: .white, isMetallic: false)
+                    customMaterial.color = .init(tint: .white, texture: .init(texture))
+                    
+                    // 3. Find the mesh inside the USDZ
+                    // USDZ files often store the actual mesh inside a child layer
+                    let targetEntity: ModelEntity? = productEntity.model != nil ? productEntity : productEntity.children.compactMap { $0 as? ModelEntity }.first(where: { $0.model != nil })
+                    
+                    if let target = targetEntity, var modelComp = target.model {
+                        var materials = modelComp.materials
+                        
+                        // 4. Smart Material Targeting:
+                        // It searches your Maya model for the material named "Canvas_MAT" and ONLY replaces that one!
+                        if let canvasIndex = materials.firstIndex(where: { $0.name?.lowercased().contains("canvas") == true }) {
+                            materials[canvasIndex] = customMaterial
+                        } else if materials.count > 1 {
+                            materials[1] = customMaterial // Fallback if name was wrong
+                        } else if materials.count > 0 {
+                            materials[0] = customMaterial // Fallback if only 1 material exists
+                        }
+                        
+                        // Apply the updated materials back to the model
+                        modelComp.materials = materials
+                        target.model = modelComp
+                    }
                 } catch {
                     print("Failed to generate texture: \(error)")
                 }
             }
             
-            let productEntity = createProductEntity(for: parent.project, with: material)
+            // 5. Install gestures so the user can drag and rotate the model with their fingers
             arView.installGestures([.translation, .rotation], for: productEntity)
             
             anchorEntity.addChild(productEntity)
             arView.scene.addAnchor(anchorEntity)
         }
         
-        private func createProductEntity(for project: DesignProject, with material: SimpleMaterial) -> ModelEntity {
-            let productEntity = ModelEntity()
-            let w = project.widthMeters
-            let h = project.heightMeters
+        private func createProductEntity(for project: DesignProject) -> ModelEntity? {
+            let modelName: String
+            let baseWidth: Float
+            let baseHeight: Float
             
+            // Map the product type to the exact USDZ filename and its Maya base dimensions
             switch project.productType {
             case .aFrame:
-                let thickness: Float = 0.02
-                let panelMesh = MeshResource.generateBox(width: w, height: h, depth: thickness)
-                
-                let frontPanel = ModelEntity(mesh: panelMesh, materials: [material])
-                frontPanel.position = [0, h / 2, 0.15]
-                frontPanel.transform.rotation = simd_quatf(angle: -.pi / 12, axis: [1, 0, 0])
-                productEntity.addChild(frontPanel)
-                
-                let backPanel = ModelEntity(mesh: panelMesh, materials: [material])
-                backPanel.position = [0, h / 2, -0.15]
-                backPanel.transform.rotation = simd_quatf(angle: .pi / 12, axis: [1, 0, 0])
-                productEntity.addChild(backPanel)
-                
+                modelName = "AFrameSign"
+                baseWidth = 0.46 // 46 cm
+                baseHeight = 0.61 // 61 cm
             case .rollupBanner:
-                let baseMesh = MeshResource.generateBox(width: w + 0.05, height: 0.1, depth: 0.2)
-                let baseMat = SimpleMaterial(color: .lightGray, isMetallic: true)
-                let baseEntity = ModelEntity(mesh: baseMesh, materials: [baseMat])
-                baseEntity.position = [0, 0.05, 0]
-                productEntity.addChild(baseEntity)
-                
-                let canvasMesh = MeshResource.generateBox(width: w, height: h, depth: 0.01)
-                let canvasEntity = ModelEntity(mesh: canvasMesh, materials: [material])
-                canvasEntity.position = [0, (h / 2) + 0.1, 0]
-                productEntity.addChild(canvasEntity)
-                
+                modelName = "RollupBanner"
+                baseWidth = 0.84 // 84 cm
+                baseHeight = 2.06 // 206 cm
             case .rigidBoard:
-                let boardMesh = MeshResource.generateBox(width: w, height: h, depth: 0.05)
-                let boardEntity = ModelEntity(mesh: boardMesh, materials: [material])
-                boardEntity.position = [0, h / 2, 0]
-                productEntity.addChild(boardEntity)
+                modelName = "RigidBoard"
+                baseWidth = 0.30 // 30 cm
+                baseHeight = 0.46 // 46 cm
             }
             
-            productEntity.generateCollisionShapes(recursive: true)
-            return productEntity
+            // Load the USDZ file from Xcode's Resources
+            guard let entity = try? ModelEntity.loadModel(named: modelName) else {
+                print("❌ Failed to load \(modelName).usdz from Resources!")
+                return nil
+            }
+            
+            // Calculate scale multipliers to match the user's selected dimensions
+            let scaleX = project.widthMeters / baseWidth
+            let scaleY = project.heightMeters / baseHeight
+            
+            // Apply the scaling (Z is scaled equally with X to preserve frame thickness)
+            entity.scale = [scaleX, scaleY, scaleX]
+            
+            // Generate collisions so the object can be tapped, moved, and rotated
+            entity.generateCollisionShapes(recursive: true)
+            return entity
         }
     }
 }

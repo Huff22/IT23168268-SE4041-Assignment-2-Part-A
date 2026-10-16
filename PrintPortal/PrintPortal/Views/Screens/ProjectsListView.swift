@@ -66,6 +66,7 @@ struct ProjectsListView: View {
         }
         .background(Color.printPortalBackground.ignoresSafeArea())
         .navigationTitle("My Projects")
+        .navigationBarTitleDisplayMode(.inline)
     }
     
     private func deleteProjects(offsets: IndexSet) {

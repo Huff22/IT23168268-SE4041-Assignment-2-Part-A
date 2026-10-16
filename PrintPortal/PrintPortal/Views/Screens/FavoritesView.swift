@@ -50,5 +50,6 @@ struct FavoritesView: View {
         }
         .background(Color.printPortalBackground.ignoresSafeArea())
         .navigationTitle("Favorites")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
