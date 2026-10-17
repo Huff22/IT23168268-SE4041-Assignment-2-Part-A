@@ -1,4 +1,4 @@
-<img width="1125" height="2436" alt="image_123650291" src="https://github.com/user-attachments/assets/a058d9da-7a7f-4b50-8eb6-42b732e901e3" /># PrintPortal: AR Signage Visualization
+# PrintPortal: AR Signage Visualization
 
 PrintPortal is an iOS augmented reality application designed to help users visualize physical print products—such as A-Frames, Roll-up Banners, and Rigid Boards—in their actual environment before purchasing. Built with SwiftUI, ARKit, RealityKit, and SwiftData, the app allows users to dynamically scale 3D models, apply custom artwork textures in real-time, and seamlessly generate order quotes.
 
@@ -24,22 +24,58 @@ PrintPortal is an iOS augmented reality application designed to help users visua
 
 ## Interface Showcase
 
-> <img width="1125" height="2436" alt="image_123650291" src="https://github.com/user-attachments/assets/6c6c49a0-4ddf-4d1d-a89a-a977578f34ba" /> | <img width="1125" height="2436" alt="image_123655411 (1)" src="https://github.com/user-attachments/assets/de408660-d276-4d14-842d-f89dca6abf6e" />
-> *The main product browsing interface, fully responsive to iOS system appearance.*
+<div align="center">
+  <img width="45%" alt="image_123650291" src="https://github.com/user-attachments/assets/6c6c49a0-4ddf-4d1d-a89a-a977578f34ba" />
+  <img width="45%" alt="image_123655411 (1)" src="https://github.com/user-attachments/assets/de408660-d276-4d14-842d-f89dca6abf6e" />
+  <br>
+  <em>The main product browsing interface, fully responsive to iOS system appearance.</em>
+</div>
+<br>
 
-> <img width="1125" height="2436" alt="image_123655411" src="https://github.com/user-attachments/assets/80373f40-8e7e-42c1-bb74-3aa6a49ba18e" />
-> *Configuring the product dimensions and uploading custom 2D artwork.*
+<div align="center">
+  <img width="45%" alt="image_123655411" src="https://github.com/user-attachments/assets/80373f40-8e7e-42c1-bb74-3aa6a49ba18e" />
+  <br>
+  <em>Configuring the product dimensions and uploading custom 2D artwork.</em>
+</div>
+<br>
 
-> **[📸 INSERT: AR View - Placing the Sign]**
-> *Real-time visualization of the 3D model placed in a physical space using ARKit.*
+<div align="center">
+  <img width="45%" alt="ar view 2" src="https://github.com/user-attachments/assets/f59076b1-bb5d-4da9-818a-5dd03beba032" />
+  <br>
+  <em>Real-time visualization of the 3D model placed in a physical space using ARKit.</em>
+</div>
+<br>
 
-> **[📸 INSERT: Account Creation Screen]** | **[📸 INSERT: Request a Quote Form]**
-> *Seamless authentication and autofilled quote generation.*
+<div align="center">
+  <img width="45%" alt="account" src="https://github.com/user-attachments/assets/d6c063cb-5a6e-4a12-9366-90f5775a29c4" />
+  <img width="45%" alt="quote" src="https://github.com/user-attachments/assets/9afc76e6-54a3-43cc-9c1f-908c7185d187" />
+  <br>
+  <em>Seamless authentication and autofilled quote generation.</em>
+</div>
+<br>
 
-> **[📸 INSERT: Generated Email Draft]**
-> *The final pre-formatted order request ready to be sent to the print shop.*
+<div align="center">
+  <img width="45%" alt="email" src="https://github.com/user-attachments/assets/a53c08d2-b997-4e8c-bbcd-3ba756ad2223" />
+  <br>
+  <em>The final pre-formatted order request ready to be sent to the print shop.</em>
+</div>
+<br>
 
 ---
+
+### Cross-Device Responsiveness
+The application was engineered to provide a consistent, intuitive experience across all Apple devices and orientations:
+- **Fluid Grids:** The Catalogue utilizes SwiftUI's `LazyVGrid` with flexible columns. On a narrow iPhone in portrait mode, it displays a neat 2-column layout. On larger devices like an iPad or in landscape orientation, the grid dynamically expands to utilize the extra screen real estate without stretching the product cards.
+- **Adaptive Layouts:** Core screens like the Design Studio and Request a Quote form are wrapped in `ScrollView` containers. This ensures that smaller devices (like the iPhone SE) or horizontal orientations never suffer from clipped content or inaccessible buttons.
+- **Safe Area Handling:** All custom UI elements, such as the floating AR camera controls and bottom tab bars, respect iOS safe area insets, preventing overlap with the dynamic island, notch, or home indicator across different device models.
+
+<div align="center">
+  <img width="28%" alt="iphone air" src="https://github.com/user-attachments/assets/d420f5d4-aa78-47e2-a80b-b30223153b61" />
+  <img width="65%" alt="ipad air" src="https://github.com/user-attachments/assets/4cd70ee5-f482-41ef-ad08-2358ac066cd7" />
+  <br>
+  <em>The UI dynamically adapts to different screen sizes and orientations, utilizing fluid grids and safe-area insets.</em>
+</div>
+<br>
 
 ## 1. User Guide
 
@@ -63,7 +99,7 @@ PrintPortal is designed to be intuitive and strictly follows Apple's Human Inter
 *   **UI Framework:** SwiftUI (MVVM architecture, fully supporting Dark Mode and Dynamic Type).
 *   **Augmented Reality:** ARKit (World Tracking, Plane Detection) and RealityKit (Rendering, Gestures, Custom Materials).
 *   **Local Persistence & State:** SwiftData (managing Favorite Products and saved Projects) alongside `@AppStorage` and Environment Objects for user authentication state.
-*   **3D Assets:** Custom modeled in Autodesk Maya / Blender, exported to `.usdz` format for native iOS compatibility.
+*   **3D Assets:** Custom modeled in Autodesk Maya and Blender, exported to `.usdz` format for native iOS compatibility.
 
 ### Core Mechanisms
 *   **Dynamic Scaling:** 3D models are built to real-world scale (e.g., a standard Roll-up Banner is 84x206cm). The app uses a scaling multiplier applied directly to the RealityKit `ModelEntity` to dynamically resize the mesh without distorting the frame.
@@ -97,8 +133,10 @@ Testing was integrated throughout the development lifecycle to ensure stability.
 *   `testCatalogueScreenLoadsCorrectly()`: Asserted the rendering of key SwiftUI view components and validated screen architecture.
 *   `testFullUserJourneyNavigation()`: An automated End-to-End (E2E) test that verified the `NavigationStack` routing. The test simulated a user launching the app, tapping a product, verifying the back button on the details screen, and utilizing the Tab Bar.
 
-> **[📸 INSERT: A screenshot of Xcode showing the green checkmarks next to your UI and Unit tests passing]**
-> **[📸 INSERT: A screenshot showing the 0 failures output from the Xcode debug console]**
+<div align="center">
+  <img width="45%" alt="ui testing 2" src="https://github.com/user-attachments/assets/cca67abd-4400-4fc7-9c9f-534642d24124" />
+  <img width="45%" alt="Unit Testing" src="https://github.com/user-attachments/assets/272e3135-cc57-4166-90fe-65b035b86ccc" />
+</div>
 
 ### 3.4 Reflections on the Development Process
 Building PrintPortal was a profound exercise in balancing complex spatial mathematics with front-end usability. The most significant learning outcome was the realization that "less is often more" in product design. 
