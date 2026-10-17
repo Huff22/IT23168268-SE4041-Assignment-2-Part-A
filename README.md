@@ -1,4 +1,4 @@
-# PrintPortal: AR Signage Visualization
+<img width="1125" height="2436" alt="image_123650291" src="https://github.com/user-attachments/assets/a058d9da-7a7f-4b50-8eb6-42b732e901e3" /># PrintPortal: AR Signage Visualization
 
 PrintPortal is an iOS augmented reality application designed to help users visualize physical print products—such as A-Frames, Roll-up Banners, and Rigid Boards—in their actual environment before purchasing. Built with SwiftUI, ARKit, RealityKit, and SwiftData, the app allows users to dynamically scale 3D models, apply custom artwork textures in real-time, and seamlessly generate order quotes.
 
@@ -24,10 +24,10 @@ PrintPortal is an iOS augmented reality application designed to help users visua
 
 ## Interface Showcase
 
-> **[📸 INSERT: Catalogue View - Light Mode]** | **[📸 INSERT: Catalogue View - Dark Mode]**
+> <img width="1125" height="2436" alt="image_123650291" src="https://github.com/user-attachments/assets/6c6c49a0-4ddf-4d1d-a89a-a977578f34ba" /> | <img width="1125" height="2436" alt="image_123655411 (1)" src="https://github.com/user-attachments/assets/de408660-d276-4d14-842d-f89dca6abf6e" />
 > *The main product browsing interface, fully responsive to iOS system appearance.*
 
-> **[📸 INSERT: Design Studio / Product Details View]**
+> <img width="1125" height="2436" alt="image_123655411" src="https://github.com/user-attachments/assets/80373f40-8e7e-42c1-bb74-3aa6a49ba18e" />
 > *Configuring the product dimensions and uploading custom 2D artwork.*
 
 > **[📸 INSERT: AR View - Placing the Sign]**
