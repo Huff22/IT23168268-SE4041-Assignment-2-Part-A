@@ -1,10 +1,28 @@
-# PrintPortal: AR Signage Visualization 🪧
+# PrintPortal: AR Signage Visualization
 
 PrintPortal is an iOS augmented reality application designed to help users visualize physical print products—such as A-Frames, Roll-up Banners, and Rigid Boards—in their actual environment before purchasing. Built with SwiftUI, ARKit, RealityKit, and SwiftData, the app allows users to dynamically scale 3D models, apply custom artwork textures in real-time, and seamlessly generate order quotes.
 
+## How to Build and Run the App
+
+### Prerequisites
+*   **Mac** running macOS Sonoma (or later).
+*   **Xcode 15** (or later) installed.
+*   **Physical iOS Device:** This app requires ARKit, RealityKit, and camera access. **It will not function correctly on an Xcode Simulator.** Please test on a physical iPhone or iPad (LiDAR-equipped devices recommended for fastest plane detection).
+
+### Installation Steps
+1. **Clone the Repository:** 
+   Download the ZIP or clone the repo using terminal:
+   `git clone https://github.com/YourUsername/IT23168268-SE4041-Assignment-2-Part-A.git`
+2. **Open the Project:** 
+   Navigate into the downloaded folder and open `PrintPortal.xcodeproj` (or `.xcworkspace` if applicable).
+3. **Configure Signing:** 
+   Click on the `PrintPortal` target in the left navigator. Go to the **Signing & Capabilities** tab and select your Apple Developer Team.
+4. **Build and Run:** 
+   Connect your physical iOS device via USB. Select your device from the destination menu at the top of Xcode, and press the **Play** button (`Cmd + R`) to build and run the app.
+   
 ---
 
-## 📱 Interface Showcase
+## Interface Showcase
 
 > **[📸 INSERT: Catalogue View - Light Mode]** | **[📸 INSERT: Catalogue View - Dark Mode]**
 > *The main product browsing interface, fully responsive to iOS system appearance.*
@@ -23,7 +41,7 @@ PrintPortal is an iOS augmented reality application designed to help users visua
 
 ---
 
-## 📖 1. User Guide
+## 1. User Guide
 
 PrintPortal is designed to be intuitive and strictly follows Apple's Human Interface Guidelines for a seamless iOS experience.
 
@@ -39,7 +57,7 @@ PrintPortal is designed to be intuitive and strictly follows Apple's Human Inter
 
 ---
 
-## 🛠 2. Technical Documentation
+## 2. Technical Documentation
 
 ### Architecture & Tech Stack
 *   **UI Framework:** SwiftUI (MVVM architecture, fully supporting Dark Mode and Dynamic Type).
@@ -54,7 +72,7 @@ PrintPortal is designed to be intuitive and strictly follows Apple's Human Inter
 
 ---
 
-## 📊 3. In-Depth Report
+## 3. In-Depth Report
 
 ### 3.1 Design Decisions
 *   **UI/UX Native Feel & Dark Mode Support:** Instead of imposing a heavily customized, non-standard interface, the app leans heavily into Apple's Human Interface Guidelines. Reusable components utilize `16pt` continuous corner radii, `.ultraThinMaterial` backgrounds, and semantic system colors to ensure the app looks premium and adapts flawlessly to Dark Mode.
